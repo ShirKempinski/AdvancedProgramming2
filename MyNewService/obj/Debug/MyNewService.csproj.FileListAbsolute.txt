@@ -1,0 +1,10 @@
+C:\Users\Shir\source\repos\MyNewService\MyNewService\bin\Debug\MyNewService.exe.config
+C:\Users\Shir\source\repos\MyNewService\MyNewService\bin\Debug\MyNewService.exe
+C:\Users\Shir\source\repos\MyNewService\MyNewService\bin\Debug\MyNewService.pdb
+C:\Users\Shir\source\repos\MyNewService\MyNewService\obj\Debug\MyNewService.csprojResolveAssemblyReference.cache
+C:\Users\Shir\source\repos\MyNewService\MyNewService\obj\Debug\MyNewService.MyNewService.resources
+C:\Users\Shir\source\repos\MyNewService\MyNewService\obj\Debug\MyNewService.ProjectInstaller.resources
+C:\Users\Shir\source\repos\MyNewService\MyNewService\obj\Debug\MyNewService.csproj.GenerateResource.cache
+C:\Users\Shir\source\repos\MyNewService\MyNewService\obj\Debug\MyNewService.csproj.CoreCompileInputs.cache
+C:\Users\Shir\source\repos\MyNewService\MyNewService\obj\Debug\MyNewService.exe
+C:\Users\Shir\source\repos\MyNewService\MyNewService\obj\Debug\MyNewService.pdb
