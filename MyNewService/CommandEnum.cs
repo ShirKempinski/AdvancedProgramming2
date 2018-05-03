@@ -11,7 +11,9 @@ namespace ImageService
     /// </summary>
     public enum CommandEnum : int
     {
-        CloseCommand,
-        NewFileCommand
+        NewFileCommand,
+        GetConfigCommand,
+        LogCommand,
+        CloseCommand
     }
 }

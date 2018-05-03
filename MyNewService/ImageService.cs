@@ -42,6 +42,17 @@ namespace ImageService
             eventLogger.WriteEntry(msg.Message + "Status: " + msg.Status);
         }
 
+        private void GetEntries(Object sender, LogEntriesEventArgs args)
+        {
+            // Obtain the Log Entries of the Event Log
+            EventLogEntryCollection myEventLogEntryCollection = eventLogger.Entries;
+            // Display the 'Message' property of EventLogEntry.
+            for (int i = 0; i < myEventLogEntryCollection.Count; i++)
+            {
+                args.Args.Add(myEventLogEntryCollection[i].Message);
+            }
+        }
+
         protected override void OnStart(string[] args)
         {
             // Update the service state to Start Pending.  
@@ -65,6 +76,7 @@ namespace ImageService
             string outputDir = ConfigurationManager.AppSettings["OutputDir"];
             this.controller = new ImageController(new ImageModal(thumbnailSize, outputDir));
             this.logger.MessageReceived += OnMsg;
+            this.logger.GetEntries += GetEntries;
             this.server = new Server(logger, controller);
             server.Start();
         }

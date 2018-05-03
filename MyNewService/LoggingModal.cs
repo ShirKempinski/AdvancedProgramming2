@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ImageService
 {
@@ -9,6 +10,7 @@ namespace ImageService
     {
         #region Members
         public event EventHandler<MessageReceivedEventArgs> MessageReceived;
+        public event EventHandler<LogEntriesEventArgs> GetEntries;
         #endregion
 
         /// <summary>
@@ -29,6 +31,13 @@ namespace ImageService
             args.Message = message;
             args.Status = type;
             MessageReceived?.Invoke(this, args);
+        }
+
+        List<String> ILogging.EntriesRequest()
+        {
+            LogEntriesEventArgs args = new LogEntriesEventArgs();
+            GetEntries?.Invoke(this, args);
+            return args.Args;
         }
     }
 }

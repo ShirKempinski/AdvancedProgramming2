@@ -11,7 +11,6 @@ namespace ImageService
     class ImageController : IController
     {
         #region Members
-        private Dictionary<CommandEnum, ICommand> commandsMap;
         private IImageModal imageModal;
         #endregion
 
@@ -24,7 +23,6 @@ namespace ImageService
         /// </returns>
         public ImageController(IImageModal imageModal)
         {
-            commandsMap = new Dictionary<CommandEnum, ICommand>();
             this.imageModal = imageModal;
             SetDictionary();
         }
@@ -41,7 +39,7 @@ namespace ImageService
         /// <remarks>IController method implementation</remarks>
         public string ExecuteCommand(CommandEnum commandID, List<String> args, out bool result)
         {
-            ICommand command = commandsMap[commandID];
+            ICommand command = CommandCentral.getCommand(commandID);
             return command.Execute(args, out result);
         }
 
@@ -50,7 +48,7 @@ namespace ImageService
         /// </summary>
         private void SetDictionary()
         {
-            commandsMap.Add(CommandEnum.NewFileCommand, new NewFileCommand(this.imageModal));
+            CommandCentral.AddCommand("newFile", CommandEnum.NewFileCommand, new NewFileCommand(this.imageModal));
         }
     }
 }
