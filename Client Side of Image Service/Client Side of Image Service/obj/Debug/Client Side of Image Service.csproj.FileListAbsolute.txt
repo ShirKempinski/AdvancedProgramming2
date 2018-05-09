@@ -1,0 +1,7 @@
+C:\Users\Shir\source\repos\Client Side of Image Service\Client Side of Image Service\obj\Debug\App.g.cs
+C:\Users\Shir\source\repos\Client Side of Image Service\Client Side of Image Service\obj\Debug\LogPage.g.cs
+C:\Users\Shir\source\repos\Client Side of Image Service\Client Side of Image Service\obj\Debug\MainWindow.g.cs
+C:\Users\Shir\source\repos\Client Side of Image Service\Client Side of Image Service\obj\Debug\SettingsPage.g.cs
+C:\Users\Shir\source\repos\Client Side of Image Service\Client Side of Image Service\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\Shir\source\repos\Client Side of Image Service\Client Side of Image Service\obj\Debug\Client Side of Image Service_MarkupCompile.cache
+C:\Users\Shir\source\repos\Client Side of Image Service\Client Side of Image Service\obj\Debug\Client Side of Image Service_MarkupCompile.lref
