@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,8 +14,11 @@ namespace Client_Side_of_Image_Service
         /// <summary>
         /// string status, string message
         /// </summary>
-        /// 
-        public List<LogEntry> logList { get; }
+        ///
+
+        public ObservableCollection<LogEntry> logList { get; private set; }
+
+        //public List<LogEntry> logList { get; }
 
         public LogModel()
         {

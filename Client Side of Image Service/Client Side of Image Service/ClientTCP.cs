@@ -37,7 +37,7 @@ namespace Client_Side_of_Image_Service
             {
                 // Establish the remote endpoint for the socket.  
                 IPAddress ipAddress = IPAddress.Parse(IP);
-                IPEndPoint remoteEP = new IPEndPoint(ipAddress, int.Parse(port);
+                IPEndPoint remoteEP = new IPEndPoint(ipAddress, int.Parse(port));
 
                 // Create a TCP/IP socket.  
                 socket = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);

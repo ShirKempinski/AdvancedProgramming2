@@ -8,8 +8,22 @@
              d:DesignHeight="450"
              d:DesignWidth="800">
     <UserControl.Resources>
-        <local:Logs x:Key="logs"/>
+        <local:StatusToColorConverter x:Key="converter"/>
     </UserControl.Resources>
-    <ListBox x:Name="listBox" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,-79,-73" />
-
+    <Border Grid.Row="1">
+        <DataGrid x:Name="logsBox"
+             ItemsSource="{Binding LogModel.logList}"
+             Margin="5">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Status" Width="125" Binding="{Binding status}" >
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Background" Value="{Binding Path=status, Converter={StaticResource converter}}"></Setter>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Message" Width="*" Binding="{Binding message}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Border>
 </UserControl>

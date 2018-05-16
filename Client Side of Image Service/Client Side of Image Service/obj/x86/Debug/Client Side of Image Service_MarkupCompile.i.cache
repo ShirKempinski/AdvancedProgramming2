@@ -4,7 +4,7 @@
 winexe
 C#
 .cs
-C:\Users\Shir\source\repos\Client Side of Image Service\Client Side of Image Service\obj\Debug\
+C:\Users\Shir\source\repos\Client Side of Image Service\Client Side of Image Service\obj\x86\Debug\
 Client_Side_of_Image_Service
 none
 false
@@ -12,7 +12,7 @@ DEBUG;TRACE
 
 4664261154
 
-142109744259
+181598754795
 14-799888181
 App.xaml;LogPage.xaml;MainWindow.xaml;SettingsPage.xaml;
 

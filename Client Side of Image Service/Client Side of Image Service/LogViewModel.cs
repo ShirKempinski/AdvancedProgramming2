@@ -12,7 +12,7 @@ namespace Client_Side_of_Image_Service
     {
         #region members
         private LogModel model;
-        public ObservableCollection<LogEntry> logs { get; set; }
+        //public ObservableCollection<LogEntry> logs { get; set; }
         #endregion
 
         public LogViewModel()
@@ -21,9 +21,13 @@ namespace Client_Side_of_Image_Service
             model.logListUpdated += GetNewLog;
         }
 
+        public ObservableCollection<LogEntry> getEntries()
+        {
+            return model.logList;
+        }
         public void GetNewLog(Object sender, LogEntry args)
         {
-            logs.Add(args);
+            model.Add(args);
         }
     }
 }
