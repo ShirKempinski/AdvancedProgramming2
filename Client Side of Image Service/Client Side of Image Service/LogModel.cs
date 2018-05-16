@@ -11,21 +11,14 @@ namespace Client_Side_of_Image_Service
     {
         public event EventHandler<LogEntry> logListUpdated;
 
-        /// <summary>
-        /// string status, string message
-        /// </summary>
-        ///
-
-        public ObservableCollection<LogEntry> logList { get; private set; }
-
-        //public List<LogEntry> logList { get; }
+        public List<LogEntry> logList { get; private set; }
 
         public LogModel()
         {
             ClientTCP client = ClientTCP.getInstance();
             if (client.IsConnected())
             {
-                client.OnMessageReceived += UpdateLogs;
+                ClientTCP.OnMessageReceived += UpdateLogs;
                 client.sendCommand(CommandEnum.LogCommand.ToString());
             }
         }
@@ -47,7 +40,6 @@ namespace Client_Side_of_Image_Service
             logList.Add(entry);
 
             logListUpdated?.Invoke(this, entry);            
-            
         }
     }
 }

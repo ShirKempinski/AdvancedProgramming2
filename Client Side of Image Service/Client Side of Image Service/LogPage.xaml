@@ -12,17 +12,17 @@
     </UserControl.Resources>
     <Border Grid.Row="1">
         <DataGrid x:Name="logsBox"
-             ItemsSource="{Binding LogModel.logList}"
+             ItemsSource="{Binding logList}"
              Margin="5">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Status" Width="125" Binding="{Binding status}" >
+                <DataGridTextColumn Header="Status" Width="125" Binding="{Binding status, Mode=OneWay}" >
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock">
-                            <Setter Property="Background" Value="{Binding Path=status, Converter={StaticResource converter}}"></Setter>
+                            <Setter Property="Background" Value="{Binding Path=status, Mode=OneWay, Converter={StaticResource converter}}"></Setter>
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="Message" Width="*" Binding="{Binding message}"/>
+                <DataGridTextColumn Header="Message" Width="*" Binding="{Binding message, Mode=OneWay}"/>
             </DataGrid.Columns>
         </DataGrid>
     </Border>

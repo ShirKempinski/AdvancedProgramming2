@@ -12,7 +12,9 @@
             <local:SettingsPage/>
         </TabItem>
         <TabItem Header="Logs">
-            <local:LogPage/>
+            <Grid>
+                <local:LogPage Grid.Row="1" DataContext="{Binding LogViewModel}" Height="300"/>
+            </Grid>
         </TabItem>
     </TabControl>
 </Window>

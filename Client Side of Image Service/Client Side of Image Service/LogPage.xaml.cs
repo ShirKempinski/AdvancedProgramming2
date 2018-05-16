@@ -9,18 +9,16 @@ namespace Client_Side_of_Image_Service
     public partial class LogPage : UserControl
     {
         private LogViewModel vm;
-        //private static StatusToColorConverter converter;
 
         public LogPage()
         {
-            InitializeComponent();
             vm = new LogViewModel();
-            //converter = new StatusToColorConverter();
             DataContext = vm;
-            foreach(LogEntry entry in vm.getEntries())
+            foreach(LogEntry entry in vm.logList)
             {
                 logsBox.Items.Add(entry);
             }
+            InitializeComponent();
         }
     }
 }

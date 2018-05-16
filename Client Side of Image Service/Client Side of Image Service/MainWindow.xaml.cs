@@ -29,7 +29,13 @@ namespace Client_Side_of_Image_Service
         {
             isConnected = ClientTCP.getInstance().IsConnected();
             background = isConnected? Brushes.White :  Brushes.Gray;
+              if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
+            {
+                logPage = new LogPage();
+                settingsPage = new SettingsPage();
+            }
             InitializeComponent();
+          
         }
     }
 }
