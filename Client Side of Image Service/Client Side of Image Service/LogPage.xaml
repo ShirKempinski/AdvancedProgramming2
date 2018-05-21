@@ -8,7 +8,7 @@
              d:DesignHeight="450"
              d:DesignWidth="800">
     <UserControl.Resources>
-        <local:StatusToColorConverter x:Key="converter"/>
+        <local:StatusToColorConverter x:Key="StatusToColorConverter"/>
     </UserControl.Resources>
     <Border Grid.Row="1">
         <DataGrid x:Name="logsBox"
@@ -18,7 +18,7 @@
                 <DataGridTextColumn Header="Status" Width="125" Binding="{Binding status, Mode=OneWay}" >
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock">
-                            <Setter Property="Background" Value="{Binding Path=status, Mode=OneWay, Converter={StaticResource converter}}"></Setter>
+                            <Setter Property="Background" Value="{Binding Path=status, Converter={StaticResource StatusToColorConverter}}"></Setter>
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>

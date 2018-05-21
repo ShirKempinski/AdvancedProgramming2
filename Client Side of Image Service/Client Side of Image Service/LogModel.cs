@@ -9,12 +9,11 @@ namespace Client_Side_of_Image_Service
 {
     public class LogModel
     {
-        public event EventHandler<LogEntry> logListUpdated;
-
-        public List<LogEntry> logList { get; private set; }
+        public ObservableCollection<LogEntry> logList { get; private set; }
 
         public LogModel()
         {
+            logList = new ObservableCollection<LogEntry>();
             ClientTCP client = ClientTCP.getInstance();
             if (client.IsConnected())
             {
@@ -38,8 +37,6 @@ namespace Client_Side_of_Image_Service
             string[] statusAndMessage = args.Split(delimiter, StringSplitOptions.RemoveEmptyEntries);
             LogEntry entry = new LogEntry(statusAndMessage[0], statusAndMessage[1]);
             logList.Add(entry);
-
-            logListUpdated?.Invoke(this, entry);            
         }
     }
 }

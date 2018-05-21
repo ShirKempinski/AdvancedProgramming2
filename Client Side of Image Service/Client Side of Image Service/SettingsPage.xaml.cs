@@ -20,9 +20,23 @@ namespace Client_Side_of_Image_Service
     /// </summary>
     public partial class SettingsPage : UserControl
     {
+        private SettingsViewModel vm;
+
         public SettingsPage()
         {
+            vm = new SettingsViewModel();
+            DataContext = vm;
+            handlersBox.ItemsSource = vm.handlers;
+
             InitializeComponent();
+        }
+
+        public void RemoveButtonClicked(object sender, RoutedEventArgs e)
+        {
+            foreach (string handler in handlersBox.SelectedItems)
+            {
+                vm.CloseHandler(handler);
+            }
         }
     }
 }

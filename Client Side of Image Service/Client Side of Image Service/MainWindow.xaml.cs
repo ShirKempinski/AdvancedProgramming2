@@ -34,8 +34,7 @@ namespace Client_Side_of_Image_Service
                 logPage = new LogPage();
                 settingsPage = new SettingsPage();
             }
-            InitializeComponent();
-          
+            InitializeComponent(); 
         }
     }
 }

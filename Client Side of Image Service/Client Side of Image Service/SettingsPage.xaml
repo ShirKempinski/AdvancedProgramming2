@@ -6,7 +6,93 @@
              xmlns:local="clr-namespace:Client_Side_of_Image_Service"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
+    <Grid x:Name="SettingsView">
+        <ScrollViewer Grid.Row="1" Grid.ColumnSpan="3" MaxHeight="{Binding (FrameworkElement.ActualHeight), 
+                            RelativeSource={RelativeSource AncestorType=UserControl}}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.Resources>
+                    <Style x:Key="title">
+                        <Setter Property="TextBlock.Padding" Value="3"/>
+                        <Setter Property="TextBlock.Margin" Value="3"/>
+                        <Setter Property="TextBlock.Foreground" Value="BurlyWood"/>
+                    </Style>
+                </Grid.Resources>
+                <Border Grid.Row="0">
+                    <Grid Margin="5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0"
+                                   Grid.Row="0"
+                                   VerticalAlignment="Bottom">
+                            <Run Text="Output Directory" Style="{StaticResource title}" />
+                        </TextBlock>
+                        <TextBlock Grid.Row="0" x:Name="OutputDirectory"
+                                   VerticalAlignment="Top" 
+                                   RenderTransformOrigin="0.837,0.284" Grid.Column="1" Margin="6.667,0,-6.667,0" >
+                            <Run Text="{Binding outputDirectory, Mode=TwoWay}" /></TextBlock>
+
+                        <TextBlock Grid.Column="0"
+                                   Grid.Row="1"
+                                   VerticalAlignment="Bottom"><Run Text="Source Name" Style="{StaticResource title}"/></TextBlock>
+                        <TextBlock Grid.Column="1" x:Name="SourceName"
+                                   VerticalAlignment="Bottom" 
+                                   Grid.ColumnSpan="2" Margin="6.667,0,-6.667,0" Grid.Row="1">
+                            <Run Text="{Binding sourceName, Mode=TwoWay}" /></TextBlock>
+
+                        <TextBlock Grid.Column="0"
+                                   Grid.Row="2"
+                                   VerticalAlignment="Bottom">
+                            <Run Text="Log Name" Style="{StaticResource title}"/>
+                        </TextBlock>
+                        <TextBlock Grid.Column="1" x:Name="LogName"
+                                   Grid.Row="2"
+                                   VerticalAlignment="Bottom" Grid.ColumnSpan="2" 
+                                   Margin="6.667,0,-6.667,0" Grid.RowSpan="2">
+                            <Run Text="{Binding logName, Mode=TwoWay}" />
+                        </TextBlock>
+
+                        <TextBlock Grid.Column="0"
+                                   Grid.Row="3"
+                                   VerticalAlignment="Bottom">
+                            <Run Text="Thumbnail Size" Style="{StaticResource title}"/>
+                        </TextBlock>
+                        <TextBlock Grid.Column="1" x:Name="ThumbnailSize"
+                                   Grid.Row="3"
+                                   VerticalAlignment="Bottom" Grid.ColumnSpan="2" 
+                                   Margin="6.667,0,-6.667,0" Grid.RowSpan="2">
+                            <Run Text="{Binding thumbnailSize, Mode=TwoWay}" />
+                        </TextBlock>
+                        <Button Grid.Row="5" x:Name="RemoveDirButton"
+                        Click="RemoveButtonClicked"
+                        Content="Remove"
+                        AutomationProperties.AutomationId="RemoveDirButton" Grid.Column="1" Margin="219,0,-314,-7" RenderTransformOrigin="1.167,0.5" Grid.RowSpan="2" Cursor="None"/>
+
+                        <Border Grid.Row="1">
+                            <ListBox x:Name="handlersBox"
+                                 IsTabStop="False"
+                                 ItemsSource="{Binding handlers}"
+                                 Margin="35,82,-663,-401">
+                            </ListBox >
+                        </Border>
+                    </Grid>
+                </Border>
+            </Grid>
+        </ScrollViewer>
     </Grid>
+    
 </UserControl>

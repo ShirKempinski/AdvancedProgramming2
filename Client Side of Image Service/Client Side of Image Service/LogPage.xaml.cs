@@ -14,10 +14,7 @@ namespace Client_Side_of_Image_Service
         {
             vm = new LogViewModel();
             DataContext = vm;
-            foreach(LogEntry entry in vm.logList)
-            {
-                logsBox.Items.Add(entry);
-            }
+            logsBox.ItemsSource = vm.logList;
             InitializeComponent();
         }
     }

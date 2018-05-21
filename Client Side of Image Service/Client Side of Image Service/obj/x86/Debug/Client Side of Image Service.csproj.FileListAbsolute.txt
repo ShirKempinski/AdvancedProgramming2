@@ -1,3 +1,6 @@
+C:\Users\Shir\source\repos\Client Side of Image Service\Client Side of Image Service\bin\x86\Debug\Client Side of Image Service.exe.config
+C:\Users\Shir\source\repos\Client Side of Image Service\Client Side of Image Service\bin\x86\Debug\Client Side of Image Service.exe
+C:\Users\Shir\source\repos\Client Side of Image Service\Client Side of Image Service\bin\x86\Debug\Client Side of Image Service.pdb
 C:\Users\Shir\source\repos\Client Side of Image Service\Client Side of Image Service\obj\x86\Debug\Client Side of Image Service.csprojResolveAssemblyReference.cache
 C:\Users\Shir\source\repos\Client Side of Image Service\Client Side of Image Service\obj\x86\Debug\App.g.cs
 C:\Users\Shir\source\repos\Client Side of Image Service\Client Side of Image Service\obj\x86\Debug\LogPage.g.cs
@@ -6,3 +9,13 @@ C:\Users\Shir\source\repos\Client Side of Image Service\Client Side of Image Ser
 C:\Users\Shir\source\repos\Client Side of Image Service\Client Side of Image Service\obj\x86\Debug\GeneratedInternalTypeHelper.g.cs
 C:\Users\Shir\source\repos\Client Side of Image Service\Client Side of Image Service\obj\x86\Debug\Client Side of Image Service_MarkupCompile.cache
 C:\Users\Shir\source\repos\Client Side of Image Service\Client Side of Image Service\obj\x86\Debug\Client Side of Image Service_MarkupCompile.lref
+C:\Users\Shir\source\repos\Client Side of Image Service\Client Side of Image Service\obj\x86\Debug\App.baml
+C:\Users\Shir\source\repos\Client Side of Image Service\Client Side of Image Service\obj\x86\Debug\LogPage.baml
+C:\Users\Shir\source\repos\Client Side of Image Service\Client Side of Image Service\obj\x86\Debug\MainWindow.baml
+C:\Users\Shir\source\repos\Client Side of Image Service\Client Side of Image Service\obj\x86\Debug\SettingsPage.baml
+C:\Users\Shir\source\repos\Client Side of Image Service\Client Side of Image Service\obj\x86\Debug\Client Side of Image Service.g.resources
+C:\Users\Shir\source\repos\Client Side of Image Service\Client Side of Image Service\obj\x86\Debug\Client_Side_of_Image_Service.Properties.Resources.resources
+C:\Users\Shir\source\repos\Client Side of Image Service\Client Side of Image Service\obj\x86\Debug\Client Side of Image Service.csproj.GenerateResource.cache
+C:\Users\Shir\source\repos\Client Side of Image Service\Client Side of Image Service\obj\x86\Debug\Client Side of Image Service.csproj.CoreCompileInputs.cache
+C:\Users\Shir\source\repos\Client Side of Image Service\Client Side of Image Service\obj\x86\Debug\Client Side of Image Service.exe
+C:\Users\Shir\source\repos\Client Side of Image Service\Client Side of Image Service\obj\x86\Debug\Client Side of Image Service.pdb
