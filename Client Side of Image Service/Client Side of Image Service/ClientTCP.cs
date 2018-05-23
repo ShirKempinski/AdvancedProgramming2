@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -8,22 +10,25 @@ using System.Threading.Tasks;
 
 namespace Client_Side_of_Image_Service
 {
-    public class ClientTCP
+    public sealed class ClientTCP
     {
-        private static Socket socket;
+        private static TcpClient client;
+        private static StreamReader reader;
+        private static StreamWriter writer;
+        private static Stream stream;
         private static bool isConnected;
-        private static ClientTCP instance;
-        private static Mutex instanceMutex;
+        private static volatile ClientTCP instance;
         private static Mutex sendAndReceiveMutex;
+        private static Object locker = new object();
         private Thread receiver; 
-        
-        public static event EventHandler<string> OnMessageReceived;
+
+
+        public static event EventHandler<List<string>> OnMessageReceived;
 
         private ClientTCP()
         {
             string serverIP = ConfigurationManager.AppSettings["ServerIP"];
             string serverPort = ConfigurationManager.AppSettings["ServerPort"];
-            instanceMutex = new Mutex();
             sendAndReceiveMutex = new Mutex();
             StartClient(serverIP, serverPort);
         }
@@ -38,55 +43,62 @@ namespace Client_Side_of_Image_Service
             // Connect to a remote device.  
             try
             {
-                // Establish the remote endpoint for the socket.  
-                IPAddress ipAddress = IPAddress.Parse(IP);
-                IPEndPoint remoteEP = new IPEndPoint(ipAddress, int.Parse(port));
-
-                // Create a TCP/IP socket.  
-                socket = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-
-                // Connect to the remote endpoint.  
-                socket.BeginConnect(remoteEP, null, socket);
-
+                client = new TcpClient(IP, int.Parse(port));//client = new TcpClient(new IPEndPoint(IPAddress.Parse(IP), int.Parse(port)));
+                //client.Connect(IP, int.Parse(port));
+                stream = client.GetStream();
+                reader = new StreamReader(stream);
+                writer = new StreamWriter(stream);
                 isConnected = true;
                 receiver = new Thread(getMessage);
+                writer.WriteLine("Client started!");
+                Console.WriteLine("Client started!");
             }
             catch (Exception e)
             {
-                socket.Close();
+                if (client != null) client.Close();
                 isConnected = false;
+                Console.WriteLine(e.Message);
             }
         }
 
         public static ClientTCP getInstance()
         {
-            instanceMutex.WaitOne();
             if (instance == null)
             {
-                instance = new ClientTCP();
+                lock(locker)
+                {
+                    if (instance == null)
+                    {
+                        instance = new ClientTCP();
+                    }
+                }
             }
-            instanceMutex.ReleaseMutex();
             return instance;
         }
 
         public void sendCommand (string command)
         {
-            byte[] message = Encoding.ASCII.GetBytes(command);
             sendAndReceiveMutex.WaitOne();
-            socket.Send(message);
+            writer.WriteLine(command);
             sendAndReceiveMutex.ReleaseMutex();
+            Console.WriteLine("Client sent a message! Message: " + command);
+
         }
 
         public static void getMessage()
         {
             while (isConnected)
             {
-                byte[] buffer = new byte[2048];
-                sendAndReceiveMutex.WaitOne();
-                int receivedDataLength = socket.Receive(buffer);
-                sendAndReceiveMutex.ReleaseMutex();
-                string message = Encoding.ASCII.GetString(buffer, 0, receivedDataLength);
-                OnMessageReceived?.Invoke(getInstance(), message);
+                string message;
+                List<string> info = new List<string>();
+                while ((message = reader.ReadLine()) != "<EOF>")
+                {
+                    if (message.Length == 0) continue;
+                    info.Add(message);
+                }
+                writer.WriteLine("Client received a message! Message: " + message);
+                Console.WriteLine("Client received a message! Message: " + message);
+                OnMessageReceived?.Invoke(getInstance(), info);    
             }
         }
     }

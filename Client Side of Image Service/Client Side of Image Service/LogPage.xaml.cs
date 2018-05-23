@@ -14,6 +14,7 @@ namespace Client_Side_of_Image_Service
         {
             vm = new LogViewModel();
             DataContext = vm;
+            logsBox = new DataGrid();
             logsBox.ItemsSource = vm.logList;
             InitializeComponent();
         }

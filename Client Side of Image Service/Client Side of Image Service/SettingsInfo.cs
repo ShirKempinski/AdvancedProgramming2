@@ -8,19 +8,18 @@ namespace Client_Side_of_Image_Service
 {
     public class SettingsInfo
     {
-        public string outputDirectory { get; }
-        public string sourceName { get; }
-        public string logName { get; }
-        public string thumbnailSize { get; }
+        public string outputDirectory { get; set; }
+        public string sourceName { get; set; }
+        public string logName { get; set; }
+        public string thumbnailSize { get; set; }
 
-        public SettingsInfo(string args)
+        public SettingsInfo(List<string> args)
         {
-            string[] delimiter = { "Output Directory:", "Source Name:", "Log Name:", "Thumbnail Size:" };
-            string[] configInfo = args.Split(delimiter, StringSplitOptions.RemoveEmptyEntries);
-            outputDirectory = configInfo[0];
-            sourceName = configInfo[1];
-            logName = configInfo[2];
-            thumbnailSize = configInfo[3];
+            if (args == null) { return; }            
+            outputDirectory = args[0];
+            sourceName = args[1];
+            logName = args[2];
+            thumbnailSize = args[3];
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Net;
@@ -18,15 +19,17 @@ namespace ImageService
     class Server
     {
         #region Members
-        private ILogging logger;
-        private IController controller;
-        private static volatile List<Socket> connectedClients;
-        private static Mutex clientsMutex;
+        public ILogging logger { get; }
+        public IController controller { get; }
+        public static List<Socket> connectedClients { get; private set; }
+        public static TcpListener listener { get; set; }
+        public Thread listeningThread { get; set; }
+        private static Mutex clientsMutex { get; set; }
 
         // The event that notifies about a new Command being received
         public event EventHandler<CommandReceivedEventArgs> CommandReceived;
         #endregion
-
+       
         /// <summary>
         /// Server constructor.
         /// </summary>
@@ -41,7 +44,6 @@ namespace ImageService
             this.controller = controller;
             clientsMutex = new Mutex();
             connectedClients = new List<Socket>();
-            CommandCentral.SetCommands(logger);
         }
 
         /// <summary>
@@ -58,7 +60,7 @@ namespace ImageService
             {
                 CreateHandler(directory);
             }
-            StartListening();
+            StartListening(this);
         }
 
         /// <summary>
@@ -87,7 +89,7 @@ namespace ImageService
         public void SendCommand(CommandEnum id, List<String> args, string path)
         {
             CommandReceivedEventArgs cArgs = new CommandReceivedEventArgs(id, args, path);
-            this.CommandReceived?.Invoke(this, cArgs);
+            CommandReceived?.Invoke(this, cArgs);
         }
 
         /// <summary>
@@ -104,81 +106,112 @@ namespace ImageService
             CloseAllClients();
         }
 
-        private static void HandleClient(object socket)
+        private static void HandleClient(Server server, Socket client)
         {
-            Socket clientSocket = (Socket) socket;
+            Stream clientStream = new NetworkStream(client);
+            StreamWriter clientWriter = new StreamWriter(clientStream);
+            StreamReader clientReader = new StreamReader(clientStream);
             while (true)
             {
-                byte[] bytes = new Byte[1024];
-                string data = null;
-                while (true)
-                {
-                    bytes = new byte[1024];
-                    int bytesRec = clientSocket.Receive(bytes);
-                    data += Encoding.ASCII.GetString(bytes, 0, bytesRec);
-                    if (data.IndexOf("<EOF>") > -1)
-                    {
-                        break;
-                    }
-                }
-                if (data == "closeClient") { break; }
-                CommandEnum @enum = CommandCentral.getCommandEnum(data);
+                // read the message
+                string message = clientReader.ReadLine();
+                // if client disconnected, break out
+                if (message == "closeClient") break;
+                server.logger.Log(message, MessageTypeEnum.INFO);
                 List<string> toSend = new List<string>();
-                CommandCentral.getCommand(@enum).Execute(toSend, out bool result);
-                toSend.Add("<EOF>");
+                if (message.StartsWith(CommandEnum.CloseCommand.ToString()))
+                {
+                    string path = message.TrimStart(CommandEnum.CloseCommand.ToString().ToCharArray());
+                    server.SendCommand(CommandEnum.CloseCommand, null, path);
+                    //update clients
+                    server.HandlersChanged(path);
+                    continue;
+                }
+                if (message.StartsWith(CommandEnum.LogCommand.ToString()))
+                {
+                    server.logger.Log("LogCommand commanded", MessageTypeEnum.INFO);
+                    ICommand logCommand = new LogCommand(server.logger);
+                    logCommand.Execute(toSend, out bool res);
+                }
+                else if (message.StartsWith(CommandEnum.GetConfigCommand.ToString()))
+                {
+                    server.logger.Log("Config commanded", MessageTypeEnum.INFO);
+                    ICommand getConfigCommand = new GetConfigCommand();
+                    getConfigCommand.Execute(toSend, out bool res);
+                }
+              
+                //send the client it's request
+                toSend.Add("<EOF>\n");
+
+                clientsMutex.WaitOne();
                 foreach (string s in toSend)
                 {
-                    byte[] msg = Encoding.ASCII.GetBytes(s);
-                    clientSocket.Send(msg);
+                    clientWriter.WriteLine(s);
                 }
+                clientsMutex.ReleaseMutex();
+                server.logger.Log(toSend[0] + " was sent" , MessageTypeEnum.INFO);
             }
-            
+            clientStream.Close();
         }
 
         private void CloseAllClients()
         {
             clientsMutex.WaitOne();
-            foreach(Socket sckt in connectedClients)
+            foreach(Socket client in connectedClients)
             {
-                sckt.Close();
-                connectedClients.Remove(sckt);
+                client.Close();
+                connectedClients.Remove(client);
             }
             clientsMutex.ReleaseMutex();
         }
 
-        public static void StartListening()
+        public static void StartListening(Server server)
         {
-            // Establish the local endpoint for the socket.  
-            // Dns.GetHostName returns the name of the   
-            // host running the application.  
-            IPHostEntry ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
-            IPAddress ipAddress = ipHostInfo.AddressList[0];
-            IPEndPoint localEndPoint = new IPEndPoint(ipAddress, 11000);
-
-            // Create a TCP/IP socket.  
-            Socket listener = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-
+            listener = new TcpListener(IPAddress.Parse(ConfigurationManager.AppSettings["IP"]),
+                int.Parse(ConfigurationManager.AppSettings["Port"]));
+            
             // Bind the socket to the local endpoint and listen for incoming connections.  
             try
             {
-                listener.Bind(localEndPoint);
-                listener.Listen(10);
-                // Start listening for connections.  
-                while (true)
+                
+                // Start listening for connections.
+                server.listeningThread = new Thread(() =>
                 {
-                    // Program is suspended while waiting for an incoming connection.  
-                    Socket handler = listener.Accept();
-                    clientsMutex.WaitOne();
-                    connectedClients.Add(handler);
-                    clientsMutex.ReleaseMutex();
-                    Thread clientThread = new Thread(() => HandleClient(handler));
-                    clientThread.Start();
-                }
+                    listener.Start();
+                    while (true)
+                    {                     
+                        // Program is suspended while waiting for an incoming connection.
+                        if (listener.Pending())
+                        {
+                            Socket client = listener.AcceptSocket();
+                            clientsMutex.WaitOne();
+                            connectedClients.Add(client);
+                            clientsMutex.ReleaseMutex();
+                            Thread clientThread = new Thread(() => HandleClient(server, client));
+                            clientThread.Start();
+                        }
+                    }
+                });
+                server.listeningThread.Start();
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.ToString());
+                server.logger.Log(e.ToString(), MessageTypeEnum.FAIL);
             }
+        }
+
+        public void HandlersChanged(string handlerPath)
+        {
+            clientsMutex.WaitOne();
+            foreach (Socket client in connectedClients)
+            {
+                StreamWriter writer = new StreamWriter(new NetworkStream(client));
+                writer.WriteLine(CommandEnum.CloseCommand);
+                writer.WriteLine(handlerPath);
+                writer.WriteLine("<EOF>");
+                writer.Close();
+            }
+            clientsMutex.ReleaseMutex();
         }
     }
 }

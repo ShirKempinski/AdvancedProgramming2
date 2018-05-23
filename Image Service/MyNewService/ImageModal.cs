@@ -159,7 +159,7 @@ namespace ImageService
                         string dateTaken = r.Replace(Encoding.UTF8.GetString(propItem.Value), "-", 2);
                         return DateTime.Parse(dateTaken);
                     }
-                } catch (IOException e)
+                } catch (IOException)
                 {
                     return new DateTime(1, 1, 1);
                 } finally

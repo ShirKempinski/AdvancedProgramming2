@@ -12,6 +12,7 @@ namespace ImageService
     {
         #region Members
         private IImageModal imageModal;
+        private ICommand newFileCommand;
         #endregion
 
         /// <summary>
@@ -24,7 +25,7 @@ namespace ImageService
         public ImageController(IImageModal imageModal)
         {
             this.imageModal = imageModal;
-            SetDictionary();
+            newFileCommand = new NewFileCommand(imageModal);
         }
 
         /// <summary>
@@ -39,16 +40,12 @@ namespace ImageService
         /// <remarks>IController method implementation</remarks>
         public string ExecuteCommand(CommandEnum commandID, List<String> args, out bool result)
         {
-            ICommand command = CommandCentral.getCommand(commandID);
-            return command.Execute(args, out result);
-        }
-
-        /// <summary>
-        /// Sets the Dictionary mapping CommandEnum to the respective ICommand implementation.
-        /// </summary>
-        private void SetDictionary()
-        {
-            CommandCentral.AddCommand("newFile", CommandEnum.NewFileCommand, new NewFileCommand(this.imageModal));
+            if (commandID == CommandEnum.NewFileCommand)
+            {
+                return newFileCommand.Execute(args, out result);
+            }
+            result = false;
+            return null;
         }
     }
 }

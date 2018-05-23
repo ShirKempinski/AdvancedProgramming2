@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
-using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ImageService
 {
@@ -19,6 +15,7 @@ namespace ImageService
             args.Add("ThumbnailSize:" + ConfigurationManager.AppSettings["ThumbnailSize"]);
             args.Add(ConfigurationManager.AppSettings["LogName"]);
             args.Add(ConfigurationManager.AppSettings["Handler"]);
+            args.Insert(0, CommandEnum.GetConfigCommand.ToString());
             result = true;
             return "Configuration Requested";
         }

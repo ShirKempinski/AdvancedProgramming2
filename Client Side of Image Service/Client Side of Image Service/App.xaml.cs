@@ -13,6 +13,7 @@ namespace Client_Side_of_Image_Service
     /// </summary>
     public partial class App : Application
     {
+        [STAThread]
         public static void Main()
         {
             var application = new App();

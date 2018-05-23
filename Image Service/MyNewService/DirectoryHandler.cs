@@ -85,10 +85,10 @@ namespace ImageService
         void OnClose(DirectoryCloseEventArgs args)
         {
             try {
-                if (this.path == args.DirectoryPath)
+                if (path == args.DirectoryPath)
                 {
-                    this.path = null;
-                    this.dirWatcher.EnableRaisingEvents = false;
+                    path = null;
+                    dirWatcher.EnableRaisingEvents = false;
                     DirectoryClose?.Invoke(this, args);
                     logger.Log(args.Message, MessageTypeEnum.INFO);
                 }
@@ -119,7 +119,7 @@ namespace ImageService
         {
             if (e.CommandID == CommandEnum.CloseCommand)
             {
-                DirectoryCloseEventArgs args = new DirectoryCloseEventArgs(path, "Closing Handler: " + path);
+                DirectoryCloseEventArgs args = new DirectoryCloseEventArgs(e.RequestDirPath, "Closing Handler: " + path);
                 OnClose(args);
             }
             else

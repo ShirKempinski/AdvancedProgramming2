@@ -48,10 +48,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CloseCommand.cs" />
     <Compile Include="CommandEnum.cs" />
     <Compile Include="CommandReceivedEvent.cs" />
     <Compile Include="DirectoryCloseEventArgs.cs" />
     <Compile Include="DirectoryHandler.cs" />
+    <Compile Include="GetConfigCommand.cs" />
     <Compile Include="ICommand.cs" />
     <Compile Include="IController.cs" />
     <Compile Include="IHandler.cs" />
@@ -65,6 +67,8 @@
     <Compile Include="ImageService.Designer.cs">
       <DependentUpon>ImageService.cs</DependentUpon>
     </Compile>
+    <Compile Include="LogCommand.cs" />
+    <Compile Include="LogEntriesEventArgs.cs" />
     <Compile Include="LoggingModal.cs" />
     <Compile Include="MessageReceivedEventArgs.cs" />
     <Compile Include="MessageTypeEnum.cs" />

@@ -1,6 +1,7 @@
 C:\Users\Shir\source\repos\MyNewService\MyNewService\bin\Debug\ImageService.exe.config
 C:\Users\Shir\source\repos\MyNewService\MyNewService\bin\Debug\ImageService.exe
 C:\Users\Shir\source\repos\MyNewService\MyNewService\bin\Debug\ImageService.pdb
+C:\Users\Shir\source\repos\MyNewService\MyNewService\obj\Debug\ImageService.csprojResolveAssemblyReference.cache
 C:\Users\Shir\source\repos\MyNewService\MyNewService\obj\Debug\ImageService.ImageService.resources
 C:\Users\Shir\source\repos\MyNewService\MyNewService\obj\Debug\ImageService.ProjectInstaller.resources
 C:\Users\Shir\source\repos\MyNewService\MyNewService\obj\Debug\ImageService.csproj.GenerateResource.cache

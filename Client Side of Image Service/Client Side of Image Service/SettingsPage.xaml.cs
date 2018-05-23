@@ -26,6 +26,7 @@ namespace Client_Side_of_Image_Service
         {
             vm = new SettingsViewModel();
             DataContext = vm;
+            handlersBox = new ListBox();
             handlersBox.ItemsSource = vm.handlers;
 
             InitializeComponent();

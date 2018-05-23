@@ -28,15 +28,18 @@ namespace Client_Side_of_Image_Service
         /// <format> "log status:" + status + "log message:" + message </format>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        public void UpdateLogs(object sender, string args)
+        public void UpdateLogs(object sender, List<string> args)
         {
             string logCommand = CommandEnum.LogCommand.ToString();
-            if (!args.StartsWith(logCommand)) return;
-            args = args.TrimStart(logCommand.ToCharArray());
-            string[] delimiter = { "log status:", "log message:" };
-            string[] statusAndMessage = args.Split(delimiter, StringSplitOptions.RemoveEmptyEntries);
-            LogEntry entry = new LogEntry(statusAndMessage[0], statusAndMessage[1]);
-            logList.Add(entry);
+            if (args[0] != logCommand) return;
+            args.Remove(logCommand);
+            string[] delimiter = { "Message:", "Status:" };
+            foreach (string log in args)
+            {
+                string[] statusAndMessage = log.Split(delimiter, StringSplitOptions.RemoveEmptyEntries);
+                LogEntry entry = new LogEntry(statusAndMessage[0], statusAndMessage[1]);
+                logList.Add(entry);
+            }
         }
     }
 }

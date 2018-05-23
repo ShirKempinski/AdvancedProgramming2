@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Client_Side_of_Image_Service
 {
@@ -24,9 +21,12 @@ namespace Client_Side_of_Image_Service
             model.handlersUpdated += RemoveHandler;
         }
 
-        public void RemoveHandler(object sender, string args)
+        public void RemoveHandler(object sender, List<string> args)
         {
-            handlers.Remove(args);
+            foreach (string handler in args)
+            {
+                handlers.Remove(handler);
+            }
         }
 
         public void CloseHandler(string handler)

@@ -39,7 +39,7 @@ namespace ImageService
 
         private void OnMsg(Object sender, MessageReceivedEventArgs msg)
         {
-            eventLogger.WriteEntry(msg.Message + "Status: " + msg.Status);
+            eventLogger.WriteEntry("Status: " + msg.Status + " Message: " + msg.Message);
         }
 
         private void GetEntries(Object sender, LogEntriesEventArgs args)
@@ -59,8 +59,8 @@ namespace ImageService
             ServiceStatus serviceStatus = new ServiceStatus();
             serviceStatus.dwCurrentState = ServiceState.SERVICE_START_PENDING;
             serviceStatus.dwWaitHint = 100000;
-            SetServiceStatus(this.ServiceHandle, ref serviceStatus);
-            eventLogger.WriteEntry("In OnStart");
+            SetServiceStatus(ServiceHandle, ref serviceStatus);
+            eventLogger.WriteEntry("Status: INFO Message: In OnStart");
             // Set up a timer to trigger every minute.  
             System.Timers.Timer timer = new System.Timers.Timer();
             timer.Interval = 60000; // 60 seconds  
@@ -71,39 +71,39 @@ namespace ImageService
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
 
             //Reading from appconfig and creating necessary objects
-            this.logger = new LoggingModal();
+            logger = new LoggingModal();
             int thumbnailSize = int.Parse(ConfigurationManager.AppSettings["ThumbnailSize"]);
             string outputDir = ConfigurationManager.AppSettings["OutputDir"];
-            this.controller = new ImageController(new ImageModal(thumbnailSize, outputDir));
-            this.logger.MessageReceived += OnMsg;
-            this.logger.GetEntries += GetEntries;
-            this.server = new Server(logger, controller);
+            controller = new ImageController(new ImageModal(thumbnailSize, outputDir));
+            logger.MessageReceived += OnMsg;
+            logger.GetEntries += GetEntries;
+            server = new Server(logger, controller);
             server.Start();
         }
 
         public void OnTimer(object sender, System.Timers.ElapsedEventArgs args)
         {
             // TODO: Insert monitoring activities here.  
-            eventLogger.WriteEntry("Monitoring the System", EventLogEntryType.Information, eventId++);
+            eventLogger.WriteEntry("Status: INFO Message: Monitoring the System", EventLogEntryType.Information, eventId++);
         }
         protected override void OnStop() {
-            eventLogger.WriteEntry("In onStop.");
+            eventLogger.WriteEntry("Status: INFO Message: In onStop.");
         }
 
         protected override void OnPause()
         {
-            eventLogger.WriteEntry("In onPause.");
+            eventLogger.WriteEntry("Status: INFO Message: In onPause.");
         }
 
         protected override void OnShutdown()
         {
-            eventLogger.WriteEntry("In OnShutdown.");
+            eventLogger.WriteEntry("Status: INFO Message: In OnShutdown.");
             this.server.SendCommand(CommandEnum.CloseCommand, new List<String>(), "all");
         }
 
         protected override void OnContinue()
         {
-            eventLogger.WriteEntry("In OnContinue.");
+            eventLogger.WriteEntry("Status: INFO Message: In OnContinue.");
         }
 
         public enum ServiceState

@@ -13,7 +13,7 @@ namespace Client_Side_of_Image_Service
         public ObservableCollection<string> handlers { get; private set; }
         private ClientTCP client;
 
-        public event EventHandler<string> handlersUpdated;
+        public event EventHandler<List<string>> handlersUpdated;
 
         public SettingsModel()
         {
@@ -24,26 +24,30 @@ namespace Client_Side_of_Image_Service
                 ClientTCP.OnMessageReceived += UpdateSettingsMap;
                 client.sendCommand(CommandEnum.GetConfigCommand.ToString());
             }
+            info = new SettingsInfo(null);
         }
 
-        public void UpdateHandlers(object sender, string args)
+        public void UpdateHandlers(object sender, List<string> args)
         {
             string closeCommand = CommandEnum.CloseCommand.ToString();
-            if (!args.StartsWith(closeCommand)) return;
-            args = args.TrimStart(closeCommand.ToCharArray());
-            handlers.Remove(args);
+            if (args[0] != closeCommand) return;
+            args.Remove(args[0]);
+            foreach (string handler in args)
+            {
+                handlers.Remove(handler);
+            }
             handlersUpdated?.Invoke(this, args);
         }
 
-        public void UpdateSettingsMap(object sender, string args)
+        public void UpdateSettingsMap(object sender, List<string> args)
         {
             string settingsCommand = CommandEnum.GetConfigCommand.ToString();
-            if (!args.StartsWith(settingsCommand)) return;
-            args = args.TrimStart(settingsCommand.ToCharArray());
-            string[] delimiter = { "Handlers:" };
-            string[] splittedArgs = args.Split(delimiter, StringSplitOptions.RemoveEmptyEntries);
-            info = new SettingsInfo(splittedArgs[0]);
-            handlers = new ObservableCollection<string>(splittedArgs[1].Split(';'));
+            if (args[0] != settingsCommand) return;
+            args.Remove(args[0]);
+            string handlersString = args.Last();
+            args.Remove(handlersString);
+            info = new SettingsInfo(args);
+            handlers = new ObservableCollection<string>(handlersString.Split(';'));
         }
 
         public void RemoveHandler(object sender, string args)
