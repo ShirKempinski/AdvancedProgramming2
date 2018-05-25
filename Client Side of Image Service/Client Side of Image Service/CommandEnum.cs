@@ -11,6 +11,7 @@ namespace Client_Side_of_Image_Service
         NewFileCommand,
         GetConfigCommand,
         LogCommand,
-        CloseCommand
+        CloseCommand,
+        CloseServerCommand
     }
 }

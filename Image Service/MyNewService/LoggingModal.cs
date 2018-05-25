@@ -28,6 +28,7 @@ namespace ImageService
         void ILogging.Log(string message, MessageTypeEnum type)
         {
             MessageReceivedEventArgs args = new MessageReceivedEventArgs();
+            if (message.Contains("\n")) message = message.Replace('\n', ' ');
             args.Message = message;
             args.Status = type;
             MessageReceived?.Invoke(this, args);

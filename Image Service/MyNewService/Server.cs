@@ -26,6 +26,7 @@ namespace ImageService
         public Thread listeningThread { get; set; }
         private Mutex clientsMutex { get; set; }
         public bool shouldStop { get; set; }
+        
 
         // The event that notifies about a new Command being received
         public event EventHandler<CommandReceivedEventArgs> CommandReceived;
@@ -78,8 +79,22 @@ namespace ImageService
             IHandler h = new DirectoryHandler(controller, logger);
             h.StartHandleDirectory(directory);
             CommandReceived += h.OnCommandReceived;
-//            h.DirectoryClose += OnCloseServer;
+            h.DirectoryClose += NotifyClientsDirectoryClosed;
         }
+
+        public void NotifyClientsDirectoryClosed(object sender, DirectoryCloseEventArgs args)
+        {
+            clientsMutex.WaitOne();
+            foreach (TcpClient client in connectedClients)
+            {
+                StreamWriter writer = new StreamWriter(client.GetStream());
+                writer.WriteLine(CommandEnum.CloseCommand);
+                writer.WriteLine(args.DirectoryPath);
+                writer.WriteLine("<EOF>");
+            }
+            clientsMutex.ReleaseMutex();
+        }
+
 
         /// <summary>
         /// Invokes the CommandReceived event and passes the appropriate args to the subscribed Objects.
@@ -147,12 +162,10 @@ namespace ImageService
 
                     //send the client it's request
                     toSend.Add("<EOF>");
-
                     server.clientsMutex.WaitOne();
                     foreach (string s in toSend)
                     {
                         clientWriter.WriteLine(s);
-                        server.logger.Log(s + " was sent", MessageTypeEnum.INFO);
                     }
                     server.clientsMutex.ReleaseMutex();
                 }
@@ -172,6 +185,9 @@ namespace ImageService
             clientsMutex.WaitOne();
             foreach(TcpClient client in connectedClients)
             {
+                StreamWriter writer = new StreamWriter(client.GetStream());
+                writer.WriteLine(CommandEnum.CloseServerCommand);
+                writer.WriteLine("<EOF>");
                 client.Close();
                 connectedClients.Remove(client);
             }

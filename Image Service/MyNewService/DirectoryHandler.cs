@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Text.RegularExpressions;
 
@@ -91,6 +92,19 @@ namespace ImageService
                     dirWatcher.EnableRaisingEvents = false;
                     DirectoryClose?.Invoke(this, args);
                     logger.Log(args.Message, MessageTypeEnum.INFO);
+
+                    string handlers = ConfigurationManager.AppSettings["Handlers"];
+                    Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+                    int index = handlers.IndexOf(path);
+                    string value;
+                    if (index > 0) value = handlers.Remove(index - 1, path.Length + 1);
+                    else
+                    {
+                        value = handlers.Remove(0, path.Length);
+                        if (value[0] == ';') value = value.TrimStart(';');
+                    }
+                    config.AppSettings.Settings["Handlers"].Value = value;
+                    config.Save(ConfigurationSaveMode.Modified);
                 }
             } catch (Exception e)
             {

@@ -1,6 +1,7 @@
 C:\Users\Shir\source\repos\Client Side of Image Service\Client Side of Image Service\bin\x86\Debug\Client Side of Image Service.exe.config
 C:\Users\Shir\source\repos\Client Side of Image Service\Client Side of Image Service\bin\x86\Debug\Client Side of Image Service.exe
 C:\Users\Shir\source\repos\Client Side of Image Service\Client Side of Image Service\bin\x86\Debug\Client Side of Image Service.pdb
+C:\Users\Shir\source\repos\Client Side of Image Service\Client Side of Image Service\obj\x86\Debug\Client Side of Image Service.csprojResolveAssemblyReference.cache
 C:\Users\Shir\source\repos\Client Side of Image Service\Client Side of Image Service\obj\x86\Debug\App.g.cs
 C:\Users\Shir\source\repos\Client Side of Image Service\Client Side of Image Service\obj\x86\Debug\LogPage.g.cs
 C:\Users\Shir\source\repos\Client Side of Image Service\Client Side of Image Service\obj\x86\Debug\MainWindow.g.cs
@@ -18,4 +19,3 @@ C:\Users\Shir\source\repos\Client Side of Image Service\Client Side of Image Ser
 C:\Users\Shir\source\repos\Client Side of Image Service\Client Side of Image Service\obj\x86\Debug\Client Side of Image Service.csproj.CoreCompileInputs.cache
 C:\Users\Shir\source\repos\Client Side of Image Service\Client Side of Image Service\obj\x86\Debug\Client Side of Image Service.exe
 C:\Users\Shir\source\repos\Client Side of Image Service\Client Side of Image Service\obj\x86\Debug\Client Side of Image Service.pdb
-C:\Users\Shir\source\repos\Client Side of Image Service\Client Side of Image Service\obj\x86\Debug\Client Side of Image Service.csprojResolveAssemblyReference.cache
