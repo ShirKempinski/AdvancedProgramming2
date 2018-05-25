@@ -20,20 +20,12 @@ namespace Client_Side_of_Image_Service
     /// </summary>
     public partial class MainWindow : Window
     {
-        private bool isConnected;
-        private Brush background;
-        private LogPage logPage;
-        private SettingsPage settingsPage;
+        private MainWindowController controller;
 
         public MainWindow()
         {
-            isConnected = ClientTCP.getInstance().IsConnected();
-            background = isConnected ? Brushes.White : Brushes.Gray;
-            if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
-            {
-                logPage = new LogPage();
-                settingsPage = new SettingsPage();
-            }
+            controller = new MainWindowController();
+            DataContext = controller;
             InitializeComponent();
         }
     }

@@ -33,7 +33,7 @@ namespace ImageService
             MessageReceived?.Invoke(this, args);
         }
 
-        List<String> ILogging.EntriesRequest()
+        List<string> ILogging.EntriesRequest()
         {
             LogEntriesEventArgs args = new LogEntriesEventArgs();
             GetEntries?.Invoke(this, args);

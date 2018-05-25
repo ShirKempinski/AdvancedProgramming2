@@ -21,12 +21,9 @@ namespace ImageService
 
         string ICommand.Execute(List<string> args, out bool result)
         {
-            args = logger.EntriesRequest();
+            List<string> entries = logger.EntriesRequest();
+            args.AddRange(entries);
             args.Insert(0, CommandEnum.LogCommand.ToString());
-            foreach (string entry in args)
-            {
-                if (entry.EndsWith("\n")) entry.TrimEnd("\n".ToCharArray());
-            }
             result = true;
             return "Log Requested";
         }

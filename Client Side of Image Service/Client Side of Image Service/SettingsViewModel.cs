@@ -8,10 +8,10 @@ namespace Client_Side_of_Image_Service
     {
         private SettingsModel model;
 
-        public string outputDirectory { get { return model.info.outputDirectory; } }
-        public string logName { get { return model.info.logName; } }
-        public string sourceName { get { return model.info.sourceName; } }
-        public string thumbnailSize { get { return model.info.thumbnailSize; } }
+        public SettingsEntry outputDirectory { get { return model.outputDirectory; } }
+        public SettingsEntry logName { get { return model.logName; } }
+        public SettingsEntry sourceName { get { return model.sourceName; } }
+        public SettingsEntry thumbnailSize { get { return model.thumbnailSize; } }
 
         public ObservableCollection<string> handlers { get { return model.handlers; } }
 

@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Windows;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data;
 
 namespace Client_Side_of_Image_Service
 {
@@ -15,7 +17,7 @@ namespace Client_Side_of_Image_Service
         {
             logList = new ObservableCollection<LogEntry>();
             ClientTCP client = ClientTCP.getInstance();
-            if (client.IsConnected())
+            if (client.isConnected)
             {
                 ClientTCP.OnMessageReceived += UpdateLogs;
                 client.sendCommand(CommandEnum.LogCommand.ToString());
@@ -34,12 +36,15 @@ namespace Client_Side_of_Image_Service
             if (args[0] != logCommand) return;
             args.Remove(logCommand);
             string[] delimiter = { "Message:", "Status:" };
-            foreach (string log in args)
+            Application.Current.Dispatcher.Invoke(delegate
             {
-                string[] statusAndMessage = log.Split(delimiter, StringSplitOptions.RemoveEmptyEntries);
-                LogEntry entry = new LogEntry(statusAndMessage[0], statusAndMessage[1]);
-                logList.Add(entry);
-            }
+                foreach (string log in args)
+                {
+                    string[] statusAndMessage = log.Split(delimiter, StringSplitOptions.RemoveEmptyEntries);
+                    LogEntry entry = new LogEntry(statusAndMessage[0], statusAndMessage[1]);
+                    if (!string.IsNullOrEmpty(entry.status)) logList.Insert(0, entry);
+                }
+            });
         }
     }
 }

@@ -76,8 +76,7 @@
       <DependentUpon>LogPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="LogViewModel.cs" />
-    <Compile Include="MainWindowController.cs" />
-    <Compile Include="SettingsEntry.cs" />
+    <Compile Include="SettingsInfo.cs" />
     <Compile Include="SettingsModel.cs" />
     <Compile Include="SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>

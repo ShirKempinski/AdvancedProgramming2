@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Configuration;
 using System.IO;
 using System.Net;
@@ -12,18 +13,41 @@ namespace Client_Side_of_Image_Service
 {
     public sealed class ClientTCP
     {
-        private static TcpClient client;
-        private static StreamReader reader;
-        private static StreamWriter writer;
-        private static Stream stream;
-        private static bool isConnected;
+        #region Members
+        public TcpClient client { get; set; }
+        public StreamReader reader { get; set; }
+        public StreamWriter writer { get; set; }
+        public Stream stream { get; set; }
         private static volatile ClientTCP instance;
-        private static Mutex sendAndReceiveMutex;
-        private static Object locker = new object();
-        private Thread receiver; 
-
-
+        public Mutex sendAndReceiveMutex { get; set; }
+        public static Object locker = new object();
+        public Thread receiver { get; set; }
+        public event PropertyChangedEventHandler connectionStatusUpdated;
+        private bool _isConnected;
+        public bool isConnected
+        {
+            get
+            {
+                if (client != null)
+                {
+                    if (_isConnected != client.Connected) _isConnected = client.Connected;
+                    return _isConnected;
+                }
+                else return false;
+            }
+            set
+            {
+                _isConnected = value;
+                string msg;
+                if (value == true) msg = "connected";
+                else msg = "disconnected";
+                connectionStatusUpdated?.Invoke(this, new PropertyChangedEventArgs(msg));
+            }
+        }
+ 
         public static event EventHandler<List<string>> OnMessageReceived;
+        #endregion
+
 
         private ClientTCP()
         {
@@ -33,24 +57,19 @@ namespace Client_Side_of_Image_Service
             StartClient(serverIP, serverPort);
         }
 
-        public bool IsConnected()
-        {
-            return isConnected;
-        }
-
         private void StartClient(string IP, string port)
         {
             // Connect to a remote device.  
             try
             {
-                client = new TcpClient(IP, int.Parse(port));//client = new TcpClient(new IPEndPoint(IPAddress.Parse(IP), int.Parse(port)));
-                //client.Connect(IP, int.Parse(port));
+                client = new TcpClient(IP, int.Parse(port));
                 stream = client.GetStream();
                 reader = new StreamReader(stream);
                 writer = new StreamWriter(stream);
-                isConnected = true;
+                isConnected = client.Connected;
+                writer.AutoFlush = true;
                 receiver = new Thread(getMessage);
-                writer.WriteLine("Client started!");
+                receiver.Start();
                 Console.WriteLine("Client started!");
             }
             catch (Exception e)
@@ -78,6 +97,7 @@ namespace Client_Side_of_Image_Service
 
         public void sendCommand (string command)
         {
+            if (!isConnected) return;
             sendAndReceiveMutex.WaitOne();
             writer.WriteLine(command);
             sendAndReceiveMutex.ReleaseMutex();
@@ -85,20 +105,28 @@ namespace Client_Side_of_Image_Service
 
         }
 
-        public static void getMessage()
+        public void getMessage()
         {
-            while (isConnected)
+            try
             {
-                string message;
-                List<string> info = new List<string>();
-                while ((message = reader.ReadLine()) != "<EOF>")
+                while (isConnected)
                 {
-                    if (message.Length == 0) continue;
-                    info.Add(message);
+                    string message = reader.ReadLine();
+                    List<string> info = new List<string>();
+                    while (message != "<EOF>")
+                    {
+                        if (string.IsNullOrEmpty(message)) continue;
+                        info.Add(message);
+                        Console.WriteLine("got a message: " + message);
+                        message = reader.ReadLine();
+                    }
+                    OnMessageReceived?.Invoke(this, info);
                 }
-                writer.WriteLine("Client received a message! Message: " + message);
-                Console.WriteLine("Client received a message! Message: " + message);
-                OnMessageReceived?.Invoke(getInstance(), info);    
+            } catch (Exception e)
+            {
+                if (client != null) client.Close();
+                isConnected = false;
+                Console.WriteLine(e.Message);
             }
         }
     }

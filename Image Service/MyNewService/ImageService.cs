@@ -83,6 +83,7 @@ namespace ImageService
 
         public void OnTimer(object sender, System.Timers.ElapsedEventArgs args)
         {
+
             // TODO: Insert monitoring activities here.  
             eventLogger.WriteEntry("Status: INFO Message: Monitoring the System", EventLogEntryType.Information, eventId++);
         }

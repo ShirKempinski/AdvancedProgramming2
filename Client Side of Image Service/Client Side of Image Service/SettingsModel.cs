@@ -9,7 +9,10 @@ namespace Client_Side_of_Image_Service
 {
     public class SettingsModel
     {
-        public SettingsInfo info { get; private set; }
+        public SettingsEntry outputDirectory { get; set; }
+        public SettingsEntry sourceName { get; set; }
+        public SettingsEntry logName { get; set; }
+        public SettingsEntry thumbnailSize { get; set; }
         public ObservableCollection<string> handlers { get; private set; }
         private ClientTCP client;
 
@@ -18,13 +21,16 @@ namespace Client_Side_of_Image_Service
         public SettingsModel()
         {
             client = ClientTCP.getInstance();
-            if (client.IsConnected())
+            if (client.isConnected)
             {
                 ClientTCP.OnMessageReceived += UpdateHandlers;
                 ClientTCP.OnMessageReceived += UpdateSettingsMap;
+                outputDirectory = new SettingsEntry(null);
+                sourceName = new SettingsEntry(null);
+                logName = new SettingsEntry(null);
+                thumbnailSize = new SettingsEntry(null);
                 client.sendCommand(CommandEnum.GetConfigCommand.ToString());
             }
-            info = new SettingsInfo(null);
         }
 
         public void UpdateHandlers(object sender, List<string> args)
@@ -44,15 +50,27 @@ namespace Client_Side_of_Image_Service
             string settingsCommand = CommandEnum.GetConfigCommand.ToString();
             if (args[0] != settingsCommand) return;
             args.Remove(args[0]);
-            string handlersString = args.Last();
-            args.Remove(handlersString);
-            info = new SettingsInfo(args);
+            string handlersString = args.First(line =>(line.StartsWith("Handlers:")));
+            handlersString = handlersString.TrimStart("Handlers:".ToCharArray());
             handlers = new ObservableCollection<string>(handlersString.Split(';'));
+            UpdateEntries(args);
         }
 
         public void RemoveHandler(object sender, string args)
         {
             client.sendCommand(CommandEnum.CloseCommand.ToString() + args);
+        }
+
+        public void UpdateEntries(List<string> args)
+        {
+            outputDirectory = new SettingsEntry(args.First(line =>
+                                    (line.StartsWith("OutputDir:"))).TrimStart("OutputDir:".ToCharArray()));
+            sourceName = new SettingsEntry(args.First(line =>
+                                    (line.StartsWith("SourceName:"))).TrimStart("SourceName:".ToCharArray()));
+            logName = new SettingsEntry(args.First(line =>
+                                    (line.StartsWith("LogName:"))).TrimStart("LogName:".ToCharArray()));
+            thumbnailSize = new SettingsEntry(args.First(line =>
+                                    (line.StartsWith("ThumbnailSize:"))).TrimStart("ThumbnailSize:".ToCharArray()));
         }
     }
 }

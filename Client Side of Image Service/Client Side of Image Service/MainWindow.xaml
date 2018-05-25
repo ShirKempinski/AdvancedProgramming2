@@ -5,14 +5,32 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Client_Side_of_Image_Service"
         mc:Ignorable="d"
-        Background="{Binding Path=background}"
-        Title="Image Service" Height="450" Width="800">
-    <TabControl HorizontalAlignment="Left" Height="450" VerticalAlignment="Top" Width="800" Background="{Binding Path=background}">
-        <TabItem Header="Settings">
-            <local:SettingsPage/>
-        </TabItem>
-        <TabItem Header="Logs">
-            <local:LogPage/>
-        </TabItem>
-    </TabControl>
+        Background="{Binding Path=backgroundColor}"
+        Title="Image Service" Height="Auto" Width="Auto">
+    <Grid>
+        <Grid.Resources>
+            <Style  x:Key="title">
+                <Setter Property="TextBlock.Padding" Value="3"/>
+                <Setter Property="TextBlock.Margin" Value="3"/>
+                <Setter Property="TextBlock.FontSize" Value="30"/>
+                <Setter Property="TextBlock.Foreground" Value="Blue"/>
+                <Setter Property="TextBlock.HorizontalAlignment" Value="Center"/>
+            </Style>
+        </Grid.Resources>
+        
+        <TabControl 
+            HorizontalAlignment="Left" 
+            Height="450" 
+            VerticalAlignment="Top" 
+            Width="800" 
+            Background="{Binding Path=backgroundColor}">
+            
+            <TabItem Header="Settings">
+                <local:SettingsPage/>
+            </TabItem>
+            <TabItem Header="Logs">
+                <local:LogPage/>
+            </TabItem>
+        </TabControl>
+    </Grid>
 </Window>

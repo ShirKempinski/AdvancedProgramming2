@@ -18,7 +18,6 @@ namespace Client_Side_of_Image_Service
         {
             var application = new App();
             application.InitializeComponent();
-            ClientTCP communicator = ClientTCP.getInstance();
             application.Run();
         }
     }

@@ -8,8 +8,8 @@ namespace Client_Side_of_Image_Service
 {
     public class LogEntry
     {
-        private string status;
-        private string message;
+        public string status { get; set; }
+        public string message { get; set; }
 
         public LogEntry(string status, string message)
         {

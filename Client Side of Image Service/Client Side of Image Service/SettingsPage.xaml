@@ -21,7 +21,7 @@
                         <Setter Property="TextBlock.Foreground" Value="BurlyWood"/>
                     </Style>
                 </Grid.Resources>
-                <Border Grid.Row="0">
+                <Border Grid.Row="0" Background="White">
                     <Grid Margin="5">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -38,55 +38,54 @@
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0"
                                    Grid.Row="0"
-                                   VerticalAlignment="Bottom">
-                            <Run Text="Output Directory" Style="{StaticResource title}" />
+                                   VerticalAlignment="Bottom" Background="White" Foreground="{x:Null}">
+                            <Run Text="Output Directory" Style="{StaticResource title}" Background="White" Foreground="Black" />
                         </TextBlock>
                         <TextBlock Grid.Row="0" x:Name="OutputDirectory"
                                    VerticalAlignment="Top" 
                                    RenderTransformOrigin="0.837,0.284" Grid.Column="1" Margin="6.667,0,-6.667,0" >
-                            <Run Text="{Binding outputDirectory, Mode=OneWay}" /></TextBlock>
+                            <Run Text="{Binding outputDirectory.entry, Mode=OneWay}" Background="White" Foreground="Black" />
+                        </TextBlock>
 
                         <TextBlock Grid.Column="0"
                                    Grid.Row="1"
-                                   VerticalAlignment="Bottom"><Run Text="Source Name" Style="{StaticResource title}"/></TextBlock>
+                                   VerticalAlignment="Bottom"><Run Text="Source Name" Style="{StaticResource title}" Foreground="Black"/>
+                        </TextBlock>
                         <TextBlock Grid.Column="1" x:Name="SourceName"
                                    VerticalAlignment="Bottom" 
                                    Grid.ColumnSpan="2" Margin="6.667,0,-6.667,0" Grid.Row="1">
-                            <Run Text="{Binding sourceName, Mode=OneWay}" /></TextBlock>
+                            <Run Text="{Binding sourceName.entry, Mode=OneWay}"  Background="White" Foreground="Black" />
+                        </TextBlock>
 
                         <TextBlock Grid.Column="0"
                                    Grid.Row="2"
-                                   VerticalAlignment="Bottom">
-                            <Run Text="Log Name" Style="{StaticResource title}"/>
+                                   VerticalAlignment="Bottom"><Run Text="Log Name" Style="{StaticResource title}" Foreground="Black"/>
                         </TextBlock>
-                        <TextBlock Grid.Column="1" x:Name="LogName"
-                                   Grid.Row="2"
-                                   VerticalAlignment="Bottom" Grid.ColumnSpan="2" 
-                                   Margin="6.667,0,-6.667,0" Grid.RowSpan="2">
-                            <Run Text="{Binding logName, Mode=OneWay}" />
+                        <TextBlock Grid.Row="2" x:Name="LogName"
+                                   VerticalAlignment="Top" 
+                                   RenderTransformOrigin="0.837,0.284" Grid.Column="1" Margin="6.667,0,-6.667,0" >
+                            <Run Text="{Binding logName.entry, Mode=OneWay}" Background="White" Foreground="Black" />
                         </TextBlock>
 
                         <TextBlock Grid.Column="0"
                                    Grid.Row="3"
-                                   VerticalAlignment="Bottom">
-                            <Run Text="Thumbnail Size" Style="{StaticResource title}"/>
+                                   VerticalAlignment="Bottom"><Run Text="Thumbnail Size" Style="{StaticResource title}" Foreground="Black"/>
                         </TextBlock>
-                        <TextBlock Grid.Column="1" x:Name="ThumbnailSize"
-                                   Grid.Row="3"
-                                   VerticalAlignment="Bottom" Grid.ColumnSpan="2" 
-                                   Margin="6.667,0,-6.667,0" Grid.RowSpan="2">
-                            <Run Text="{Binding thumbnailSize, Mode=OneWay}" />
+                        <TextBlock Grid.Row="3" x:Name="ThumbnailSize"
+                                   VerticalAlignment="Top" 
+                                   RenderTransformOrigin="0.837,0.284" Grid.Column="1" Margin="6.667,0,-6.667,0" >
+                            <Run Text="{Binding thumbnailSize.entry, Mode=OneWay}" Background="White" Foreground="Black" />
                         </TextBlock>
                         <Button Grid.Row="5" x:Name="RemoveDirButton"
                         Click="RemoveButtonClicked"
                         Content="Remove"
-                        AutomationProperties.AutomationId="RemoveDirButton" Grid.Column="1" Margin="219,0,-314,-7" RenderTransformOrigin="1.167,0.5" Grid.RowSpan="2" Cursor="None"/>
+                        AutomationProperties.AutomationId="RemoveDirButton" Grid.Column="1" Margin="219,0,-314,0" RenderTransformOrigin="1.49,0.348" Grid.RowSpan="2" Cursor="Arrow"/>
 
                         <Border Grid.Row="1">
                             <ListBox x:Name="handlersBox"
                                  IsTabStop="False"
                                  ItemsSource="{Binding handlers}"
-                                 Margin="35,82,-663,-401">
+                                 Margin="-5,84,-705,-401">
                             </ListBox >
                         </Border>
                     </Grid>
@@ -94,5 +93,5 @@
             </Grid>
         </ScrollViewer>
     </Grid>
-    
+
 </UserControl>

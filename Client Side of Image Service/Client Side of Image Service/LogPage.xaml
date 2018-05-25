@@ -7,23 +7,57 @@
              mc:Ignorable="d" 
              d:DesignHeight="450"
              d:DesignWidth="800">
+    
     <UserControl.Resources>
         <local:StatusToColorConverter x:Key="StatusToColorConverter"/>
     </UserControl.Resources>
-    <Border Grid.Row="1">
-        <DataGrid x:Name="logsBox"
-             ItemsSource="{Binding logList}"
-             Margin="5">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Status" Width="125" Binding="{Binding status, Mode=OneWay}" >
-                    <DataGridTextColumn.ElementStyle>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="Background" Value="{Binding Path=status, Converter={StaticResource StatusToColorConverter}}"></Setter>
-                        </Style>
-                    </DataGridTextColumn.ElementStyle>
-                </DataGridTextColumn>
-                <DataGridTextColumn Header="Message" Width="*" Binding="{Binding message, Mode=OneWay}"/>
-            </DataGrid.Columns>
-        </DataGrid>
-    </Border>
+
+    <Grid x:Name="Layout">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <ScrollViewer Grid.Row="0"
+                      Grid.ColumnSpan="3"
+                      MaxHeight="{Binding (FrameworkElement.ActualHeight), RelativeSource={RelativeSource AncestorType=UserControl}}">
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <DataGrid Grid.Row="0" Margin="5" x:Name="logsList" HorizontalAlignment="Left" 
+                          ItemsSource="{Binding logList}"
+                          IsReadOnly="True" 
+                          CanUserSortColumns="False"
+                          CanUserResizeRows="False"
+                          CanUserAddRows="False"
+                          CanUserDeleteRows="False"
+                          CanUserResizeColumns="False"
+                          CanUserReorderColumns="False"
+                          ColumnHeaderHeight="25"
+                          AutoGenerateColumns="False">
+
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Status" Width="Auto" IsReadOnly="True" Binding="{Binding status}" >
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Background" Value="{Binding Path=status, Converter={StaticResource StatusToColorConverter}}"></Setter>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="Message" Width="*" IsReadOnly="True" Binding="{Binding message}"></DataGridTextColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </ScrollViewer>
+    </Grid>
 </UserControl>

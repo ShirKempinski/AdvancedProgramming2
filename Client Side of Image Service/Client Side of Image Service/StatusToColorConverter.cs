@@ -16,9 +16,9 @@ namespace Client_Side_of_Image_Service
             if (targetType != typeof(Brush))
                 throw new InvalidOperationException("Must convert to a brush");
             string status = (string)value;
-            if (status == "INFO") { return Brushes.Green; }
-            else if (status == "WARNING") { return Brushes.Yellow; }
-            else if (status == "ERROR") { return Brushes.Red; }
+            if (status.Contains("INFO")) { return Brushes.LimeGreen; }
+            else if (status.Contains("WARNNING")) { return Brushes.LightYellow; }
+            else if (status.Contains("FAIL")) { return Brushes.IndianRed; }
             else { return Brushes.Transparent; }
         }
 
