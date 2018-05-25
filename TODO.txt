@@ -1,10 +1,9 @@
 SERVICE:
-* when server receives closeCommand, it should inform all open GUIs that this handler has closed.
-* properly close server (notify all clients)
+* check if when server receives closeCommand it informs all open GUIs that this handler has closed.
+* check if upon closure the server notify all it's clients
 
 GUI:
 * design nicer pages! (Uglyness in general)
-
 * WHY ISN'T IT BLUE?!?! :'( #SoSad
-* before closure, will send the SERVICE a message that it's closed (onCloseWindow)
+* before closure, will send the server a message that it's closed (onCloseWindow event)
 * EMPTY LINES
