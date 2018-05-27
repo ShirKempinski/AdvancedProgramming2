@@ -89,6 +89,7 @@ namespace ImageService
         }
         protected override void OnStop() {
             eventLogger.WriteEntry("Status: INFO Message: In onStop.");
+            server.SendCommand(CommandEnum.CloseServerCommand, null, "all");
         }
 
         protected override void OnPause()
@@ -99,7 +100,7 @@ namespace ImageService
         protected override void OnShutdown()
         {
             eventLogger.WriteEntry("Status: INFO Message: In OnShutdown.");
-            this.server.SendCommand(CommandEnum.CloseCommand, new List<String>(), "all");
+            server.SendCommand(CommandEnum.CloseServerCommand, null, "all");
         }
 
         protected override void OnContinue()

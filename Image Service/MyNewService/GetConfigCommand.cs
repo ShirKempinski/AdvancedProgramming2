@@ -10,6 +10,7 @@ namespace ImageService
 
         string ICommand.Execute(List<string> args, out bool result)
         {
+            ConfigurationManager.RefreshSection("App.config");
             args.Add("OutputDir:" + ConfigurationManager.AppSettings["OutputDir"]);
             args.Add("SourceName:" + ConfigurationManager.AppSettings["SourceName"]);
             args.Add("LogName:" + ConfigurationManager.AppSettings["LogName"]);

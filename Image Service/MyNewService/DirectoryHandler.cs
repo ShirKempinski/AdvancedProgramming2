@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Threading;
 
 namespace ImageService
 {
@@ -17,6 +18,7 @@ namespace ImageService
     public class DirectoryHandler : IHandler
     {
         #region Members
+        private static Mutex appConfigMutex;
         private FileSystemWatcher dirWatcher;
         private IController controller;
         private ILogging logger;
@@ -35,6 +37,7 @@ namespace ImageService
         {
             this.controller = controller;
             this.logger = logger;
+            if (appConfigMutex == null) appConfigMutex = new Mutex();
         }
 
         /// <summary>
@@ -85,28 +88,16 @@ namespace ImageService
         /// <param name="e"> the arguments for the event </param>
         void OnClose(DirectoryCloseEventArgs args)
         {
-            try {
+            try
+            {
                 if (path == args.DirectoryPath)
                 {
-                    path = null;
-                    dirWatcher.EnableRaisingEvents = false;
+                    stopWatching(args);
+                    removeFromAppConfig(args.DirectoryPath);
                     DirectoryClose?.Invoke(this, args);
-                    logger.Log(args.Message, MessageTypeEnum.INFO);
-
-                    string handlers = ConfigurationManager.AppSettings["Handlers"];
-                    Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-                    int index = handlers.IndexOf(path);
-                    string value;
-                    if (index > 0) value = handlers.Remove(index - 1, path.Length + 1);
-                    else
-                    {
-                        value = handlers.Remove(0, path.Length);
-                        if (value[0] == ';') value = value.TrimStart(';');
-                    }
-                    config.AppSettings.Settings["Handlers"].Value = value;
-                    config.Save(ConfigurationSaveMode.Modified);
                 }
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 logger.Log(e.Message, MessageTypeEnum.FAIL);
             }
@@ -119,7 +110,7 @@ namespace ImageService
         void IHandler.StartHandleDirectory(string dirPath)
         {
             // The Function receives the directory to Handle
-            this.path = dirPath;
+            path = dirPath;
             CreateWatcher();
         }
 
@@ -136,6 +127,11 @@ namespace ImageService
                 DirectoryCloseEventArgs args = new DirectoryCloseEventArgs(e.RequestDirPath, "Closing Handler: " + path);
                 OnClose(args);
             }
+            else if (e.CommandID == CommandEnum.CloseServerCommand)
+            {
+                DirectoryCloseEventArgs args = new DirectoryCloseEventArgs(path, "Server Closure " + path + " closed");
+                stopWatching(args);
+            }
             else
             {
                 // The Event that will be activated upon new Command
@@ -149,6 +145,32 @@ namespace ImageService
                     logger.Log(logMsg, MessageTypeEnum.FAIL);
                 }
             }
+        }
+
+        private void stopWatching(DirectoryCloseEventArgs args)
+        {
+            path = null;
+            dirWatcher.EnableRaisingEvents = false;
+            logger.Log(args.Message, MessageTypeEnum.INFO);
+        }
+
+        private void removeFromAppConfig(string directoryPath)
+        {
+            appConfigMutex.WaitOne();
+            string handlers = ConfigurationManager.AppSettings["Handlers"];
+            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            int index = handlers.IndexOf(directoryPath);
+            string value;
+            if (index > 0) value = handlers.Remove(index - 1, (directoryPath).Length + 1);
+            else
+            {
+                value = handlers.Remove(0, (directoryPath.Length));
+                if (value[0] == ';') value = value.TrimStart(';');
+            }
+            config.AppSettings.Settings["Handlers"].Value = value;
+            config.Save(ConfigurationSaveMode.Modified);
+            ConfigurationManager.RefreshSection("App.config");
+            appConfigMutex.ReleaseMutex();
         }
     }
 }

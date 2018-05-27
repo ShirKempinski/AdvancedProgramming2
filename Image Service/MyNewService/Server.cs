@@ -26,7 +26,6 @@ namespace ImageService
         public Thread listeningThread { get; set; }
         private Mutex clientsMutex { get; set; }
         public bool shouldStop { get; set; }
-        
 
         // The event that notifies about a new Command being received
         public event EventHandler<CommandReceivedEventArgs> CommandReceived;
@@ -106,19 +105,18 @@ namespace ImageService
         {
             CommandReceivedEventArgs cArgs = new CommandReceivedEventArgs(id, args, path);
             CommandReceived?.Invoke(this, cArgs);
+            if (id == CommandEnum.CloseServerCommand)
+            {
+                OnCloseServer();
+            }
         }
 
         /// <summary>
         /// Used to inform the server it must remove the directory from it's CommandReceived event.
         /// Also removes the server from the IHandler's DirectoryClose event.
         /// </summary>
-        /// <param name="sender">The Object that invoked the event (IHandler) </param>
-        /// <param name="args">DirectoryCloseEventArgs</param>
-        private void OnCloseServer(Object sender, DirectoryCloseEventArgs args)
+        private void OnCloseServer()
         {
-            IHandler h = (IHandler)sender;
-            CommandReceived -= h.OnCommandReceived;
-            h.DirectoryClose -= OnCloseServer;
             shouldStop = true;
             CloseAllClients();
         }
@@ -129,6 +127,7 @@ namespace ImageService
             StreamWriter clientWriter = new StreamWriter(clientStream);
             clientWriter.AutoFlush = true;
             StreamReader clientReader = new StreamReader(clientStream);
+            bool ownMutex = false;
             try
             {                
                 while (client.Connected)
@@ -136,6 +135,7 @@ namespace ImageService
                     // read the message
                     string message = clientReader.ReadLine();
                     // if client disconnected, break out
+                    if (string.IsNullOrEmpty(message)) continue;
                     if (message == "closeClient") break;
                     List<string> toSend = new List<string>();
                     if (message.StartsWith(CommandEnum.CloseCommand.ToString()))
@@ -162,19 +162,26 @@ namespace ImageService
 
                     //send the client it's request
                     toSend.Add("<EOF>");
-                    server.clientsMutex.WaitOne();
+                    ownMutex = server.clientsMutex.WaitOne();
                     foreach (string s in toSend)
                     {
                         clientWriter.WriteLine(s);
                     }
                     server.clientsMutex.ReleaseMutex();
+                    ownMutex = false;
                 }
                 server.logger.Log("Client disconnected", MessageTypeEnum.INFO);
+                ownMutex = server.clientsMutex.WaitOne();
                 server.connectedClients.Remove(client);
-            } catch (Exception e)
+                server.clientsMutex.ReleaseMutex();
+                ownMutex = false;
+            }
+            catch (Exception e)
             {
+                if (server.shouldStop == true) return;
                 server.logger.Log(e.Message, MessageTypeEnum.FAIL);
                 if (client.Connected) client.Close();
+                if (ownMutex) server.clientsMutex.ReleaseMutex();
                 server.connectedClients.Remove(client);
                 server.logger.Log("Client disconnected and has been removed", MessageTypeEnum.INFO);
             }
@@ -212,7 +219,7 @@ namespace ImageService
                         // Program is suspended while waiting for an incoming connection.
                         if (server.listener.Pending())
                         {
-                            server.logger.Log("client connected", MessageTypeEnum.INFO);
+                            server.logger.Log("Client connected", MessageTypeEnum.INFO);
                             TcpClient client = server.listener.AcceptTcpClient();
                             server.clientsMutex.WaitOne();
                             server.connectedClients.Add(client);
