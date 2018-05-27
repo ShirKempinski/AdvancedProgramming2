@@ -81,6 +81,11 @@ namespace ImageService
             h.DirectoryClose += NotifyClientsDirectoryClosed;
         }
 
+        /// <summary>
+        /// Informs the clients that a Handler Directory has been removed form the watchlist
+        /// </summary>
+        /// <param name="sender">Object</param>
+        /// <param name="args">DirectoryCloseEventArgs</param>
         public void NotifyClientsDirectoryClosed(object sender, DirectoryCloseEventArgs args)
         {
             clientsMutex.WaitOne();
@@ -121,6 +126,11 @@ namespace ImageService
             CloseAllClients();
         }
 
+        /// <summary>
+        /// Static Method - Listens for Client requests and sends back the appropriate response
+        /// </summary>
+        /// <param name="server"> The in use Server instance</param>
+        /// <param name="client"> Target TCPClient</param>
         private static void HandleClient(Server server, TcpClient client)
         {
             Stream clientStream = new NetworkStream(client.Client);
@@ -186,7 +196,10 @@ namespace ImageService
                 server.logger.Log("Client disconnected and has been removed", MessageTypeEnum.INFO);
             }
         }
-
+        
+        /// <summary>
+        /// Informs all clients that the Server is shutting down and close their sockets
+        /// </summary>
         private void CloseAllClients()
         {
             clientsMutex.WaitOne();
@@ -201,6 +214,11 @@ namespace ImageService
             clientsMutex.ReleaseMutex();
         }
 
+
+        /// <summary>
+        /// Static method - Starts listening for client connections
+        /// </summary>
+        /// <param name="server"> The in use Server instance</param>
         public static void StartListening(Server server)
         {
            server.shouldStop = false;  
@@ -237,6 +255,12 @@ namespace ImageService
                 server.logger.Log(e.ToString(), MessageTypeEnum.FAIL);
             }
         }
+
+
+        /// <summary>
+        /// Informs the clients that a Handler Directory has been removed form the watchlist
+        /// </summary>
+        ///<param name="handlerPath">The path of the removed Directory</param>
 
         public void HandlersChanged(string handlerPath)
         {

@@ -7,8 +7,10 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid x:Name="SettingsView">
-        <ScrollViewer Grid.Row="1" Grid.ColumnSpan="3" MaxHeight="{Binding (FrameworkElement.ActualHeight), 
-                            RelativeSource={RelativeSource AncestorType=UserControl}}">
+        <ScrollViewer Grid.Row="1"
+                      Grid.ColumnSpan="3" 
+                      MaxHeight="{Binding (FrameworkElement.ActualHeight), 
+                      RelativeSource={RelativeSource AncestorType=UserControl}}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -76,11 +78,12 @@
                                    RenderTransformOrigin="0.837,0.284" Grid.Column="1" Margin="6.667,0,-6.667,0" >
                             <Run Text="{Binding thumbnailSize.entry, Mode=OneWay}" Background="White" Foreground="Black" />
                         </TextBlock>
-                        <Button Grid.Row="5" x:Name="RemoveDirButton"
-                        Command="{Binding RemoveCommand}"
-                        Content="Remove"
-                        AutomationProperties.AutomationId="RemoveDirButton" Grid.Column="1" Margin="219,0,-314,0"
-                        RenderTransformOrigin="1.49,0.348" Grid.RowSpan="2" Cursor="Arrow"/>
+                        <Button 
+                            Grid.Row="5" x:Name="RemoveDirButton"
+                            Command="{Binding RemoveCommand}"
+                            Content="Remove"
+                            AutomationProperties.AutomationId="RemoveDirButton" Grid.Column="1" Margin="219,0,-314,0"
+                            RenderTransformOrigin="1.49,0.348" Grid.RowSpan="2" Cursor="Arrow"/>
 
                         <Border Grid.Row="1">
                             <ListBox x:Name="handlersBox"

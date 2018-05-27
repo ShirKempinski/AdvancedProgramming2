@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace Client_Side_of_Image_Service
@@ -21,6 +18,7 @@ namespace Client_Side_of_Image_Service
                 OnPropertyChanged("backgroundColor");
             }
         }
+        //public ICommand CloseWindowCommand { get; private set; }
 
         public void OnPropertyChanged(string property)
         {
@@ -29,6 +27,7 @@ namespace Client_Side_of_Image_Service
 
         public MainWindowController()
         {
+            
             ClientTCP client = ClientTCP.getInstance();
             try
             {
@@ -48,5 +47,17 @@ namespace Client_Side_of_Image_Service
                 Console.WriteLine(e.Message);
             }
         }
+
+        /*
+        private bool CanClose(object arg)
+        {
+            return true; // Allowing the user to close the window always
+        }
+
+        private void OnCloseWindow(object sender,EventArgs e)
+        {
+            ClientTCP.getInstance().Disconnect();
+        }
+        */
     }
 }

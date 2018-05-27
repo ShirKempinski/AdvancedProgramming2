@@ -7,6 +7,8 @@
         mc:Ignorable="d"
         Background="{Binding Path=backgroundColor}"
         Title="Image Service" Height="Auto" Width="Auto">
+    <!--Closed="{Binding OnCloseWindow}"-->
+
     <Grid>
         <Grid.Resources>
             <Style  x:Key="title">
@@ -17,20 +19,20 @@
                 <Setter Property="TextBlock.HorizontalAlignment" Value="Center"/>
             </Style>
         </Grid.Resources>
-        
+
         <TabControl 
             HorizontalAlignment="Left" 
             Height="450" 
             VerticalAlignment="Top" 
             Width="800" 
-            Background="{Binding Path=backgroundColor}">
-            
-            <TabItem Header="Settings">
-                <local:SettingsPage/>
-            </TabItem>
-            <TabItem Header="Logs">
-                <local:LogPage/>
-            </TabItem>
-        </TabControl>
+            Background="{Binding Path=backgroundColor}"/>
+
+        <TabItem Header="Settings">
+            <local:SettingsPage/>
+        </TabItem>
+        <TabItem Header="Logs">
+            <local:LogPage/>
+        </TabItem>
+
     </Grid>
 </Window>

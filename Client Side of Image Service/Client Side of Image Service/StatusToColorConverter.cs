@@ -1,16 +1,28 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Media;
 
 namespace Client_Side_of_Image_Service
 {
+    /// <summary>
+    /// Converts the Log Status to a Brush color, implements IValueConverter
+    /// </summary>
     public class StatusToColorConverter : IValueConverter
     {
+        /// <summary>
+        /// IValue Converter method
+        /// </summary>
+        /// <param name="value"> Object </param>
+        /// <param name="targetType"> Type </param>
+        /// <param name="parameter"> Object </param>
+        /// <param name="culture"> CultureInfo </param>
+        /// <returns>
+        /// /// Converts "INFO" to LimeGreen
+        /// Converts "WARNING" to Yellow
+        /// Converts "FAIL" to IndianRed
+        /// Converts the rest to Transparent
+        /// </returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (targetType != typeof(Brush))
@@ -22,6 +34,11 @@ namespace Client_Side_of_Image_Service
             else { return Brushes.Transparent; }
         }
 
+        
+        /// <summary>
+        /// IValue Converter method.
+        /// Not implemented
+        /// </summary>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();

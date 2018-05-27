@@ -1,0 +1,20 @@
+F:\Docs\תואר ראשון\Git\AdvancedProgramming2\Client Side of Image Service\Client Side of Image Service\bin\Release\Client Side of Image Service.exe.config
+F:\Docs\תואר ראשון\Git\AdvancedProgramming2\Client Side of Image Service\Client Side of Image Service\bin\Release\Client Side of Image Service.exe
+F:\Docs\תואר ראשון\Git\AdvancedProgramming2\Client Side of Image Service\Client Side of Image Service\bin\Release\Client Side of Image Service.pdb
+F:\Docs\תואר ראשון\Git\AdvancedProgramming2\Client Side of Image Service\Client Side of Image Service\obj\Release\App.g.cs
+F:\Docs\תואר ראשון\Git\AdvancedProgramming2\Client Side of Image Service\Client Side of Image Service\obj\Release\LogPage.g.cs
+F:\Docs\תואר ראשון\Git\AdvancedProgramming2\Client Side of Image Service\Client Side of Image Service\obj\Release\MainWindow.g.cs
+F:\Docs\תואר ראשון\Git\AdvancedProgramming2\Client Side of Image Service\Client Side of Image Service\obj\Release\SettingsPage.g.cs
+F:\Docs\תואר ראשון\Git\AdvancedProgramming2\Client Side of Image Service\Client Side of Image Service\obj\Release\GeneratedInternalTypeHelper.g.cs
+F:\Docs\תואר ראשון\Git\AdvancedProgramming2\Client Side of Image Service\Client Side of Image Service\obj\Release\Client Side of Image Service_MarkupCompile.cache
+F:\Docs\תואר ראשון\Git\AdvancedProgramming2\Client Side of Image Service\Client Side of Image Service\obj\Release\Client Side of Image Service_MarkupCompile.lref
+F:\Docs\תואר ראשון\Git\AdvancedProgramming2\Client Side of Image Service\Client Side of Image Service\obj\Release\App.baml
+F:\Docs\תואר ראשון\Git\AdvancedProgramming2\Client Side of Image Service\Client Side of Image Service\obj\Release\LogPage.baml
+F:\Docs\תואר ראשון\Git\AdvancedProgramming2\Client Side of Image Service\Client Side of Image Service\obj\Release\MainWindow.baml
+F:\Docs\תואר ראשון\Git\AdvancedProgramming2\Client Side of Image Service\Client Side of Image Service\obj\Release\SettingsPage.baml
+F:\Docs\תואר ראשון\Git\AdvancedProgramming2\Client Side of Image Service\Client Side of Image Service\obj\Release\Client Side of Image Service.g.resources
+F:\Docs\תואר ראשון\Git\AdvancedProgramming2\Client Side of Image Service\Client Side of Image Service\obj\Release\Client_Side_of_Image_Service.Properties.Resources.resources
+F:\Docs\תואר ראשון\Git\AdvancedProgramming2\Client Side of Image Service\Client Side of Image Service\obj\Release\Client Side of Image Service.csproj.GenerateResource.cache
+F:\Docs\תואר ראשון\Git\AdvancedProgramming2\Client Side of Image Service\Client Side of Image Service\obj\Release\Client Side of Image Service.csproj.CoreCompileInputs.cache
+F:\Docs\תואר ראשון\Git\AdvancedProgramming2\Client Side of Image Service\Client Side of Image Service\obj\Release\Client Side of Image Service.exe
+F:\Docs\תואר ראשון\Git\AdvancedProgramming2\Client Side of Image Service\Client Side of Image Service\obj\Release\Client Side of Image Service.pdb

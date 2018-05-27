@@ -129,5 +129,12 @@ namespace Client_Side_of_Image_Service
                 Console.WriteLine(e.Message);
             }
         }
+
+        public void Disconnect()
+        {
+            sendCommand("closeClient");
+            client.Close();
+            isConnected = false;
+        }
     }
 }
