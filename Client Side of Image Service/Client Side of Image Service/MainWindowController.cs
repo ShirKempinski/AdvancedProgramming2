@@ -30,14 +30,23 @@ namespace Client_Side_of_Image_Service
         public MainWindowController()
         {
             ClientTCP client = ClientTCP.getInstance();
-            client.connectionStatusUpdated += delegate (object sender, PropertyChangedEventArgs args)
+            try
             {
-                App.Current.Dispatcher.Invoke(delegate
+                client.connectionStatusUpdated += delegate (object sender, PropertyChangedEventArgs args)
                 {
-                    if (args.PropertyName == "disconnected") backgroundColor = Brushes.Gray;
-                    else backgroundColor = Brushes.Azure;
-                });
-            };
+                    App.Current.Dispatcher.Invoke(delegate
+                    {
+                        if (args.PropertyName == "disconnected") backgroundColor = Brushes.Gray;
+                        else backgroundColor = Brushes.Turquoise;
+                    });
+                };
+                if (client.isConnected) client.isConnected = true;
+                else client.isConnected = false;
+
+            } catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
     }
 }

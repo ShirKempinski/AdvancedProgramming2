@@ -77,14 +77,16 @@
                             <Run Text="{Binding thumbnailSize.entry, Mode=OneWay}" Background="White" Foreground="Black" />
                         </TextBlock>
                         <Button Grid.Row="5" x:Name="RemoveDirButton"
-                        Click="RemoveButtonClicked"
+                        Command="{Binding RemoveCommand}"
                         Content="Remove"
-                        AutomationProperties.AutomationId="RemoveDirButton" Grid.Column="1" Margin="219,0,-314,0" RenderTransformOrigin="1.49,0.348" Grid.RowSpan="2" Cursor="Arrow"/>
+                        AutomationProperties.AutomationId="RemoveDirButton" Grid.Column="1" Margin="219,0,-314,0"
+                        RenderTransformOrigin="1.49,0.348" Grid.RowSpan="2" Cursor="Arrow"/>
 
                         <Border Grid.Row="1">
                             <ListBox x:Name="handlersBox"
                                  IsTabStop="False"
                                  ItemsSource="{Binding handlers}"
+                                 SelectedItem="{Binding ChosenHandler, Mode=TwoWay}"
                                  Margin="-5,84,-705,-401">
                             </ListBox >
                         </Border>

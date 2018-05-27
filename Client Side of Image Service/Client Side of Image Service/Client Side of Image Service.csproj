@@ -71,6 +71,8 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DelegateCommand.cs" />
+    <Compile Include="DelegateCommandBase.cs" />
     <Compile Include="LogEntry.cs" />
     <Compile Include="LogPage.xaml.cs">
       <DependentUpon>LogPage.xaml</DependentUpon>
@@ -84,6 +86,7 @@
     </Compile>
     <Compile Include="SettingsViewModel.cs" />
     <Compile Include="StatusToColorConverter.cs" />
+    <Compile Include="WeakEventHandlerManager.cs" />
     <Page Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

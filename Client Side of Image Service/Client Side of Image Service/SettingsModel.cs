@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows;
 
 namespace Client_Side_of_Image_Service
 {
@@ -15,8 +14,18 @@ namespace Client_Side_of_Image_Service
         public SettingsEntry thumbnailSize { get; set; }
         public ObservableCollection<string> handlers { get; private set; }
         private ClientTCP client;
+        private string chosenHandler;
+        public string ChosenHandler
+        {
+            get { return chosenHandler; }
+            set
+            {
+                chosenHandler = value;
+                OnPropertyChanged("chosenHandler");
+            }
+        }
 
-        public event EventHandler<List<string>> handlersUpdated;
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public SettingsModel()
         {
@@ -33,16 +42,25 @@ namespace Client_Side_of_Image_Service
             }
         }
 
+        public void OnPropertyChanged(string name)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+
         public void UpdateHandlers(object sender, List<string> args)
         {
             string closeCommand = CommandEnum.CloseCommand.ToString();
             if (args[0] != closeCommand) return;
             args.Remove(args[0]);
-            foreach (string handler in args)
+
+            Application.Current.Dispatcher.Invoke(delegate
             {
-                handlers.Remove(handler);
-            }
-            handlersUpdated?.Invoke(this, args);
+                foreach (string handler in args)
+                {
+                    handlers.Remove(handler);
+                }
+            });
+            OnPropertyChanged("handlersList");
         }
 
         public void UpdateSettingsMap(object sender, List<string> args)
@@ -56,9 +74,9 @@ namespace Client_Side_of_Image_Service
             UpdateEntries(args);
         }
 
-        public void RemoveHandler(object sender, string args)
+        public void RemoveHandler(string handler)
         {
-            client.sendCommand(CommandEnum.CloseCommand.ToString() + args);
+            client.sendCommand(CommandEnum.CloseCommand.ToString() + handler);
         }
 
         public void UpdateEntries(List<string> args)

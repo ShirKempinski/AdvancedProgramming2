@@ -4,15 +4,15 @@
 winexe
 C#
 .cs
-C:\Users\Shir\source\repos\Client Side of Image Service\Client Side of Image Service\obj\x86\Debug\
+C:\Users\Shir\source\repos\Client Side of Image Service\Client Side of Image Service\obj\x86\Release\
 Client_Side_of_Image_Service
 none
 false
-DEBUG;TRACE
+TRACE
 
 4664261154
 
-251203302119
+18462090273
 14-799888181
 App.xaml;LogPage.xaml;MainWindow.xaml;SettingsPage.xaml;
 
