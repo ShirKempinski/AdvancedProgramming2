@@ -1,9 +1,5 @@
-SERVICE:
-* check if when server receives closeCommand it informs all open GUIs that this handler has closed.
-* check if upon closure the server notify all it's clients
-
-GUI:
-* design nicer pages! (Uglyness in general)
-* WHY ISN'T IT BLUE?!?! :'( #SoSad
-* before closure, will send the server a message that it's closed (onCloseWindow event)
-* EMPTY LINES
+1. Add DeletePhoto class to service and a suitable command.
+2. Add numOfPicturesCommand to server
+3. Config - 
+4. Logs - 
+5. Photos - 

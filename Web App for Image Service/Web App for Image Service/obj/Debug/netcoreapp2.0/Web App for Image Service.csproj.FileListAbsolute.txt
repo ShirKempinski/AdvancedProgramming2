@@ -1,0 +1,11 @@
+C:\Users\Shir\source\repos\Web App for Image Service\Web App for Image Service\bin\Debug\netcoreapp2.0\Web App for Image Service.deps.json
+C:\Users\Shir\source\repos\Web App for Image Service\Web App for Image Service\bin\Debug\netcoreapp2.0\Web App for Image Service.runtimeconfig.json
+C:\Users\Shir\source\repos\Web App for Image Service\Web App for Image Service\bin\Debug\netcoreapp2.0\Web App for Image Service.runtimeconfig.dev.json
+C:\Users\Shir\source\repos\Web App for Image Service\Web App for Image Service\bin\Debug\netcoreapp2.0\Web App for Image Service.dll
+C:\Users\Shir\source\repos\Web App for Image Service\Web App for Image Service\bin\Debug\netcoreapp2.0\Web App for Image Service.pdb
+C:\Users\Shir\source\repos\Web App for Image Service\Web App for Image Service\obj\Debug\netcoreapp2.0\Web App for Image Service.csprojResolveAssemblyReference.cache
+C:\Users\Shir\source\repos\Web App for Image Service\Web App for Image Service\obj\Debug\netcoreapp2.0\Web App for Image Service.csproj.CoreCompileInputs.cache
+C:\Users\Shir\source\repos\Web App for Image Service\Web App for Image Service\obj\Debug\netcoreapp2.0\Web App for Image Service.AssemblyInfoInputs.cache
+C:\Users\Shir\source\repos\Web App for Image Service\Web App for Image Service\obj\Debug\netcoreapp2.0\Web App for Image Service.AssemblyInfo.cs
+C:\Users\Shir\source\repos\Web App for Image Service\Web App for Image Service\obj\Debug\netcoreapp2.0\Web App for Image Service.dll
+C:\Users\Shir\source\repos\Web App for Image Service\Web App for Image Service\obj\Debug\netcoreapp2.0\Web App for Image Service.pdb
