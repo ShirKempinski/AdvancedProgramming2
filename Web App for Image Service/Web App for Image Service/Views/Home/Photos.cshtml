@@ -1,8 +1,38 @@
-﻿@model Web_App_for_Image_Service.Models.TumbnailsModel
+﻿<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+@model Web_App_for_Image_Service.Models.ThumbnailsModel
 
 @{
-    ViewData["Title"] = "Photos";
+    ViewBag.Title = "Photos";
 }
+
 <h2>@ViewData["Title"]</h2>
 
+<div>
 
+    <div class="container">
+        <div class="row">
+            @foreach (var photo in Model.thumbnailsFormats)
+            {
+                <div class="col-sm-3 col-md-3">
+                    <div class="thumbnail">
+                        <img src="@Url.Content("~/OutputDir/Thumbnails/2018/10/download.jpg")" class="img-circle" alt="Cinque Terre">
+                        <div class="caption">
+                            <h3>@Html.DisplayFor(modelItem => photo.name)</h3>
+                            <p>Date: @Html.DisplayFor(modelItem => photo.date)</p>
+                            <p>
+                                <a href="@Url.Action("ViewPhoto", "Home", new { srcPath = photo.name})"
+                                   class="btn btn-primary" role="button" style="background-color:cornflowerblue; color:azure">View</a>
+                                <a href="@Url.Action("DeletePhoto", "Home", new { srcPath = photo.name})"
+                                   class="btn btn-primary" role="button" style="background-color:red; color:azure">Delete</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+</div>

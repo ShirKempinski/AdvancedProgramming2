@@ -7,6 +7,9 @@ namespace Web_App_for_Image_Service.Models
 {
     public class FormattedThumbnail
     {
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "fullPath")]
         public string fullPath;
 
         [Required]
@@ -25,7 +28,8 @@ namespace Web_App_for_Image_Service.Models
             string[] splittedPath = path.Split(@"\".ToCharArray());
             name = Path.GetFileName(path);
             int lastIndex = splittedPath.Length - 1;
-            date = splittedPath[lastIndex - 1] + "." + splittedPath[lastIndex - 2];
+            if (splittedPath[lastIndex - 1] == "UndefinedDate") date = "Undefined";
+            else date = splittedPath[lastIndex - 1] + "." + splittedPath[lastIndex - 2];
         }
     }
 }

@@ -15,15 +15,13 @@ namespace Web_App_for_Image_Service.Controllers
             homeModel = new HomePageModel();
             thumbnailsModel = new ThumbnailsModel();
         }
-        public IActionResult Index()
+        public IActionResult Home()
         {
             return View(homeModel);
         }
 
         public IActionResult Photos()
         {
-            ViewData["Message"] = "Your application Photos page.";
-
             return View(thumbnailsModel);
         }
 

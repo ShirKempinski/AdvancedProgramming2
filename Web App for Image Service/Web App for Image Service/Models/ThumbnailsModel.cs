@@ -14,6 +14,7 @@ namespace Web_App_for_Image_Service.Models
 
         public ThumbnailsModel()
         {
+            thumbnailsFormats = new List<FormattedThumbnail>();
             outputDir = @"OutputDir";
             thumbnailsDir = outputDir + @"\Thumbnails";
             foreach (string path in Directory.GetFiles(thumbnailsDir, "*", SearchOption.AllDirectories))

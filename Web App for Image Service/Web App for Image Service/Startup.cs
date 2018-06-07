@@ -62,7 +62,7 @@ namespace Web_App_for_Image_Service
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Home}/{action=Home}/{id?}");
             });
         }
     }
