@@ -71,8 +71,8 @@ namespace Web_App_for_Image_Service.Controllers
 
         public IActionResult SearchResults(string status)
         {
-            SearchResultModel sr = new SearchResultModel(logModel.SearchLogs(status));
-           return View(sr);
+           logModel.SearchLogs(status);
+           return View("Logs", logModel);
         }
     }
 }
