@@ -46,14 +46,6 @@ namespace Web_App_for_Image_Service.Models
             pics = numOfPics;
             if (pics == 0) pics = -1;
             client = ClientTCP.getInstance();
-            client.sendCommand(CommandEnum.GetPicsNumCommand.ToString());
-            ClientTCP.OnMessageReceived += getNumOfPics;
-        }
-
-        private void getNumOfPics(Object sender, List<string> message)
-        {
-            if (message[0] != CommandEnum.GetPicsNumCommand.ToString()) return;
-            pics = int.Parse(message[1]);
         }
 
         List<Student> loadStudents()

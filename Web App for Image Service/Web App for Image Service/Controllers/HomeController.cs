@@ -9,16 +9,16 @@ namespace Web_App_for_Image_Service.Controllers
 {
     public class HomeController : Controller
     {
-        public HomePageModel homeModel;
-        public PicturesModel picturesModel;
-        public LogPageModel logModel;
+        public static HomePageModel homeModel;
+        public static PicturesModel picturesModel;
+        public static LogPageModel logModel;
 
         public HomeController()
         {
-            picturesModel = new PicturesModel();
-            homeModel = new HomePageModel(picturesModel.pictures.Count);
+            if (picturesModel == null) picturesModel = new PicturesModel();
+            if (homeModel == null) homeModel = new HomePageModel(picturesModel.pictures.Count);
             picturesModel.PictureDeleted += homeModel.UpdatePicCounter;
-            logModel = new LogPageModel();
+            if (logModel == null) logModel = new LogPageModel();
         }
         public IActionResult Home()
         {
@@ -59,7 +59,7 @@ namespace Web_App_for_Image_Service.Controllers
 
             Picture picture = picturesModel.pictures.Find(photo => photo.originalImagePath == originalPath);
             if (picture != null) picturesModel.DeletePicture(picture);
-            return RedirectToAction("Photos");
+            return View("Photos", picturesModel);
         }
 
         public IActionResult FullPhoto(string srcPath)

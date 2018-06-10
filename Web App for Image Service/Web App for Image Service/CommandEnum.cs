@@ -12,8 +12,6 @@ namespace Web_App_for_Image_Service
         GetConfigCommand,
         LogCommand,
         CloseCommand,
-        CloseServerCommand,
-        GetPicsNumCommand,
-        DeletePicCommand
+        CloseServerCommand
     }
 }

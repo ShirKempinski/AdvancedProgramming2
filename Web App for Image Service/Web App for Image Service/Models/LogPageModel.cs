@@ -2,16 +2,19 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading;
 using System.Windows;
 
 namespace Web_App_for_Image_Service.Models
 {
     public class LogPageModel
     {
+        public Mutex logListMutex;
         public List<LogEntry> filteredList { get; private set; }
         private List<LogEntry> logList;
         public LogPageModel()
         {
+            logListMutex = new Mutex();
             logList = new List<LogEntry>();
             filteredList = logList;
             ClientTCP client = ClientTCP.getInstance();
@@ -20,7 +23,6 @@ namespace Web_App_for_Image_Service.Models
                 ClientTCP.OnMessageReceived += UpdateLogs;
                 client.sendCommand(CommandEnum.LogCommand.ToString());
             }
-            logList.Add(new LogEntry("INFO", "bambam"));
         }
 
         /// <summary>
@@ -37,13 +39,14 @@ namespace Web_App_for_Image_Service.Models
             string[] delimiter = { "Message:", "Status:" };
             try
             {
-                    foreach (string log in args)
-                    {
-                        string[] statusAndMessage = log.Split(delimiter, StringSplitOptions.RemoveEmptyEntries);
-                        LogEntry entry = new LogEntry(statusAndMessage[0], statusAndMessage[1]);
-                        if (!string.IsNullOrEmpty(entry.status)) logList.Insert(0, entry);
-                    }
-                
+                logListMutex.WaitOne();
+                foreach (string log in args)
+                {
+                    string[] statusAndMessage = log.Split(delimiter, StringSplitOptions.RemoveEmptyEntries);
+                    LogEntry entry = new LogEntry(statusAndMessage[0], statusAndMessage[1]);
+                    if (!string.IsNullOrEmpty(entry.status)) logList.Insert(0, entry);
+                }
+                logListMutex.ReleaseMutex();
             } catch (Exception e)
             {
                 Console.WriteLine(e.Message);
@@ -52,9 +55,10 @@ namespace Web_App_for_Image_Service.Models
 
         public void SearchLogs(string type)
         {
+            logListMutex.WaitOne();
             if (string.IsNullOrEmpty(type)) filteredList = logList; //All entries
-            filteredList = logList.Where(entry => entry.status == type).ToList();
-            
+            filteredList = logList.Where(entry => entry.status.StartsWith(type)).ToList();
+            logListMutex.ReleaseMutex();
         }
     }
 }

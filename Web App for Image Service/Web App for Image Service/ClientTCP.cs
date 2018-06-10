@@ -56,10 +56,6 @@ namespace Web_App_for_Image_Service
         //private ClientTCP(IConfiguration _config)
         private ClientTCP()
         {
-            /*
-            string serverIP = _config["ServerIP"];
-            string serverPort = _config["ServerPort"];
-            */
             string serverIP = "127.0.0.1";
             string serverPort = "11000";
             sendAndReceiveMutex = new Mutex();
