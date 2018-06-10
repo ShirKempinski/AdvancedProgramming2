@@ -13,6 +13,7 @@ namespace Web_App_for_Image_Service.Models
         public LogPageModel()
         {
             logList = new List<LogEntry>();
+            filteredList = logList;
             ClientTCP client = ClientTCP.getInstance();
             if (client.isConnected)
             {
@@ -49,10 +50,11 @@ namespace Web_App_for_Image_Service.Models
             }
         }
 
-        public List<LogEntry> SearchLogs(string type)
+        public void SearchLogs(string type)
         {
-            if (string.IsNullOrEmpty(type)) return logList; //All entries
+            if (string.IsNullOrEmpty(type)) filteredList = logList; //All entries
             filteredList = logList.Where(entry => entry.status == type).ToList();
+            
         }
     }
 }
