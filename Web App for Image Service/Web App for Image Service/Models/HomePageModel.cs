@@ -41,10 +41,11 @@ namespace Web_App_for_Image_Service.Models
                 return pics.ToString();
             }
         }
-        public HomePageModel()
+        public HomePageModel(int numOfPics)
         {
+            pics = numOfPics;
+            if (pics == 0) pics = -1;
             client = ClientTCP.getInstance();
-            pics = -1;
             client.sendCommand(CommandEnum.GetPicsNumCommand.ToString());
             ClientTCP.OnMessageReceived += getNumOfPics;
         }
@@ -68,6 +69,11 @@ namespace Web_App_for_Image_Service.Models
                 result.Add(student);
             }
             return result;
+        }
+
+        public void UpdatePicCounter(object sender, int num)
+        {
+            pics = num;
         }
 
         public string GetData(string line, string field)

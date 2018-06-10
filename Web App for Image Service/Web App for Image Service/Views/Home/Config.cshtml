@@ -1,0 +1,48 @@
+﻿@model Web_App_for_Image_Service.Models.HomePageModel
+
+@{
+    ViewBag.Title = "Home";
+}
+<div class="row-md-4">
+    <h2>Image Service Status</h2>
+    <!-- Running / Off -->
+    <p> Service is @Html.DisplayFor(model => Model.serviceStatus)</p>
+</div>
+<div class="row-md-4">
+    <h2>Saved Pictures</h2>
+    <!-- number -->
+    <p> Number of saved pictures: @Html.DisplayFor(model => Model.numOfPictures)</p>
+</div>
+<div class="row-md-4">
+
+    <h2>Students</h2>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => Model.students[0].Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => Model.students[0].FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => Model.students[0].LastName)
+            </th>
+        </tr>
+
+        @foreach (var item in Model.students)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>

@@ -1,17 +1,47 @@
-﻿@{
-    ViewData["Title"] = "Logs";
+﻿@model Web_App_for_Image_Service.Models.LogPageModel;
+@{
+    ViewData["Title"] = "Service Logs";
 }
+
+
 <h2>@ViewData["Title"]</h2>
 <h3>@ViewData["Message"]</h3>
+<div>
+    </div>
 
-<address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
-</address>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => Model.logList[0].status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => Model.logList[0].message)
+            </th>
+        </tr>
+        @foreach (var item in Model.logList)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.logList[0].status)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.logList[0].message)
+                </td>
+            </tr>
+        }
+    </table>
 
-<address>
-    <strong>Support:</strong> <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-</address>
+<div></div>
+<p> Filter by:</p>
+<div class="dropdown">
+    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" >
+        Type
+        <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+        <li role="presentation"><a role="menuitem" tabindex="-1" href="@Url.Action("SearchResults", "Home", new { status = ""})"></a></li>
+        <li role="presentation"><a role="menuitem" tabindex="-1" href="@Url.Action("SearchResults", "Home", new { status = "INFO"})">INFO</a></li>
+        <li role="presentation"><a role="menuitem" tabindex="-1" href="@Url.Action("SearchResults", "Home", new { status = "WARNING"})">WARNING</a></li>
+        <li role="presentation"><a role="menuitem" tabindex="-1" href="@Url.Action("SearchResults", "Home", new { status = "ERROR"})">ERROR</a></li>
+    </ul>
+</div>
