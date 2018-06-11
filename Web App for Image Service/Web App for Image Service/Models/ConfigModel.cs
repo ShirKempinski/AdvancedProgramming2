@@ -34,10 +34,10 @@ namespace Web_App_for_Image_Service.Models
         public List<string> handlers { get; private set; }
 
         private ClientTCP client;
-        private string chosenHandler;
 
         public ConfigModel()
         {
+            handlers = new List<string>();
             client = ClientTCP.getInstance();
             if (client.isConnected)
             {

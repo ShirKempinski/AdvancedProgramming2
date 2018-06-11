@@ -12,6 +12,7 @@ namespace Web_App_for_Image_Service.Controllers
         public static HomePageModel homeModel;
         public static PicturesModel picturesModel;
         public static LogPageModel logModel;
+        public static ConfigModel configModel;
 
         public HomeController()
         {
@@ -19,6 +20,8 @@ namespace Web_App_for_Image_Service.Controllers
             if (homeModel == null) homeModel = new HomePageModel(picturesModel.pictures.Count);
             picturesModel.PictureDeleted += homeModel.UpdatePicCounter;
             if (logModel == null) logModel = new LogPageModel();
+            if (configModel == null) configModel = new ConfigModel();
+
         }
         public IActionResult Home()
         {
@@ -40,6 +43,11 @@ namespace Web_App_for_Image_Service.Controllers
         public IActionResult Logs()
         {
             return View(logModel);
+        }
+
+        public IActionResult Config()
+        {
+            return View(configModel);
         }
 
         public IActionResult Error()
@@ -73,6 +81,17 @@ namespace Web_App_for_Image_Service.Controllers
         {
            logModel.SearchLogs(status);
            return View("Logs", logModel);
+        }
+
+        public IActionResult HandlerConfirmation(string handlerPath)
+        {
+            return View("HandlerConfirmation",handlerPath);
+        }
+
+        public IActionResult RemoveHandler(string handlerPath)
+        {
+            if(!string.IsNullOrEmpty(handlerPath)) configModel.RemoveHandler(handlerPath);
+            return View("Config", configModel);
         }
     }
 }

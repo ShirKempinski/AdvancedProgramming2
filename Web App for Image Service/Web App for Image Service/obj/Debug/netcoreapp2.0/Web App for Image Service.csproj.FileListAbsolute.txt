@@ -25,9 +25,9 @@ C:\Users\mijael\source\repos\AdvancedProgramming2-master\Web App for Image Servi
 C:\Users\mijael\source\repos\AdvancedProgramming2-master\Web App for Image Service\Web App for Image Service\bin\Debug\netcoreapp2.0\Web App for Image Service.runtimeconfig.dev.json
 C:\Users\mijael\source\repos\AdvancedProgramming2-master\Web App for Image Service\Web App for Image Service\bin\Debug\netcoreapp2.0\Web App for Image Service.dll
 C:\Users\mijael\source\repos\AdvancedProgramming2-master\Web App for Image Service\Web App for Image Service\bin\Debug\netcoreapp2.0\Web App for Image Service.pdb
-C:\Users\mijael\source\repos\AdvancedProgramming2-master\Web App for Image Service\Web App for Image Service\obj\Debug\netcoreapp2.0\Web App for Image Service.csprojAssemblyReference.cache
 C:\Users\mijael\source\repos\AdvancedProgramming2-master\Web App for Image Service\Web App for Image Service\obj\Debug\netcoreapp2.0\Web App for Image Service.csproj.CoreCompileInputs.cache
 C:\Users\mijael\source\repos\AdvancedProgramming2-master\Web App for Image Service\Web App for Image Service\obj\Debug\netcoreapp2.0\Web App for Image Service.AssemblyInfoInputs.cache
 C:\Users\mijael\source\repos\AdvancedProgramming2-master\Web App for Image Service\Web App for Image Service\obj\Debug\netcoreapp2.0\Web App for Image Service.AssemblyInfo.cs
 C:\Users\mijael\source\repos\AdvancedProgramming2-master\Web App for Image Service\Web App for Image Service\obj\Debug\netcoreapp2.0\Web App for Image Service.dll
 C:\Users\mijael\source\repos\AdvancedProgramming2-master\Web App for Image Service\Web App for Image Service\obj\Debug\netcoreapp2.0\Web App for Image Service.pdb
+C:\Users\mijael\source\repos\AdvancedProgramming2-master\Web App for Image Service\Web App for Image Service\obj\Debug\netcoreapp2.0\Web App for Image Service.csprojAssemblyReference.cache

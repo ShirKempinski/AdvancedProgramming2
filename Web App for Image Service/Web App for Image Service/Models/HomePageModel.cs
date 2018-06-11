@@ -44,7 +44,7 @@ namespace Web_App_for_Image_Service.Models
         public HomePageModel(int numOfPics)
         {
             pics = numOfPics;
-            if (pics == 0) pics = -1;
+            if (pics < 0) pics = -1;
             client = ClientTCP.getInstance();
         }
 
