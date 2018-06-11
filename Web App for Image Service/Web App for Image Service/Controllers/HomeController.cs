@@ -85,7 +85,8 @@ namespace Web_App_for_Image_Service.Controllers
 
         public IActionResult HandlerConfirmation(string handlerPath)
         {
-            return View("HandlerConfirmation",handlerPath);
+            configModel.selectedHandler = handlerPath;
+            return View("HandlerConfirmation",configModel);
         }
 
         public IActionResult RemoveHandler(string handlerPath)

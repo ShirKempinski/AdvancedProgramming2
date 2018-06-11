@@ -6,24 +6,50 @@
 <div>
     <h3>Settings:</h3>
 </div>
-<div class="row-md-4">
-    <p><strong>@Html.DisplayNameFor(model => Model.outputDirectory):</strong> @Html.DisplayFor(model => Model.outputDirectory)</p>
-</div>
-<div class="row-md-4">
-    <p><strong>@Html.DisplayNameFor(model => Model.sourceName):</strong> @Html.DisplayFor(model => Model.sourceName)</p>
-</div>
-<div class="row-md-4">
-    <p><strong>@Html.DisplayNameFor(model => Model.logName):</strong> @Html.DisplayFor(model => Model.logName)</p>
-</div>
-<div class="row-md-4">
-    <p><strong>@Html.DisplayNameFor(model => Model.thumbnailSize):</strong> @Html.DisplayFor(model => Model.thumbnailSize)</p>
-</div>
-<div class="row-md-4">
+<table class="table">
+    <tr>
+        <th>
+            <p>@Html.DisplayNameFor(model => Model.outputDirectory):</p>
+        </th>
+        <td>
+            <p>@Html.DisplayFor(model => Model.outputDirectory)</p>
+        </td>
+    </tr>
+    <tr>
+        <th>
+            <p>@Html.DisplayNameFor(model => Model.sourceName):</p>
+        </th>
+        <td>
+            <p>@Html.DisplayFor(model => Model.sourceName)</p>
+        </td>
+    </tr>
+    <tr>
+        <th>
+            <p>@Html.DisplayNameFor(model => Model.logName):</p>
+        </th>
+        <td>
+            <p>@Html.DisplayFor(model => Model.logName)</p>
+        </td>
+    </tr>
+    <tr>
+        <th>
+            <p>@Html.DisplayNameFor(model => Model.thumbnailSize):</p>
+        </th>
+        <td>
+            <p>@Html.DisplayFor(model => Model.thumbnailSize)</p>
+        </td>
+    </tr>
+</table>
+<div>    
     <h3>Storing pictures from:</h3>
-    @foreach (string handler in Model.handlers)
-    {
-        <a href="@Url.Action("HandlerConfirmation", "Home", new { handlerPath =handler})"
-           class="btn btn-primary" role="button" style="background-color:cornflowerblue; color:white">@handler</a>
-    }
-
+    <table>
+        @foreach (string handler in Model.handlers)
+        {
+            <tr>
+                <td>
+                    <a href="@Url.Action("HandlerConfirmation", "Home", new { handlerPath = handler })" style="color:blue">@handler</a>
+                </td>
+            </tr>
+         }
+    </table>
 </div>

@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Threading;
 
 namespace Web_App_for_Image_Service.Models
 {
@@ -25,13 +26,23 @@ namespace Web_App_for_Image_Service.Models
 
         [Required]
         [DataType(DataType.Text)]
-        [Display(Name = "ThumbnailSize")]
+        [Display(Name = "Thumbnail Size")]
         public string thumbnailSize { get; set; }
 
         [Required]
         [DataType(DataType.Text)]
         [Display(Name = "Handlers")]
         public List<string> handlers { get; private set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Waiting Mode")]
+        public bool enabled;
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Selected Handler")]
+        public string selectedHandler;
 
         private ClientTCP client;
 
@@ -44,6 +55,7 @@ namespace Web_App_for_Image_Service.Models
                 ClientTCP.OnMessageReceived += UpdateHandlers;
                 ClientTCP.OnMessageReceived += UpdateConfigMap;
                 client.sendCommand(CommandEnum.GetConfigCommand.ToString());
+                enabled = true;
             }
         }
 
@@ -56,6 +68,7 @@ namespace Web_App_for_Image_Service.Models
             {
                 handlers.Remove(handler);
             }
+            enabled = true;
         }
     
         public void UpdateConfigMap(object sender, List<string> args)
@@ -72,6 +85,7 @@ namespace Web_App_for_Image_Service.Models
         public void RemoveHandler(string handler)
         {
             client.sendCommand(CommandEnum.CloseCommand.ToString() + handler);
+            enabled = false;
         }
 
         public void UpdateEntries(List<string> args)

@@ -7,34 +7,11 @@
 <h2>@ViewData["Title"]</h2>
 <h3>@ViewData["Message"]</h3>
 <div>
-    </div>
+</div>
 
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => Model.filteredList[0].status)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => Model.filteredList[0].message)
-            </th>
-        </tr>
-        @foreach (var entry in Model.filteredList)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => entry.status)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => entry.message)
-                </td>
-            </tr>
-        }
-    </table>
-
-<div></div>
 <p> Filter by:</p>
 <div class="dropdown">
-    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" >
+    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
         Type
         <span class="caret"></span>
     </button>
@@ -45,3 +22,26 @@
         <li role="presentation"><a role="menuitem" tabindex="-1" href="@Url.Action("SearchResults", "Home", new { status = "FAIL"})">FAIL</a></li>
     </ul>
 </div>
+<div></div>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => Model.filteredList[0].status)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => Model.filteredList[0].message)
+        </th>
+    </tr>
+    @foreach (var entry in Model.filteredList)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => entry.status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => entry.message)
+            </td>
+        </tr>
+    }
+</table>
+

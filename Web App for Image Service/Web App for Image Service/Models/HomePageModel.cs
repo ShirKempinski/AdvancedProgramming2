@@ -37,7 +37,7 @@ namespace Web_App_for_Image_Service.Models
         {
             get
             {
-                if (pics < 0) return "Waiting for server";
+                if (pics == 0) return "No Saved Photos";
                 return pics.ToString();
             }
         }
