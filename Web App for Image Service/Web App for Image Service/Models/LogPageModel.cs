@@ -56,8 +56,11 @@ namespace Web_App_for_Image_Service.Models
         public void SearchLogs(string type)
         {
             logListMutex.WaitOne();
-            if (string.IsNullOrEmpty(type)) filteredList = logList; //All entries
-            filteredList = logList.Where(entry => entry.status.StartsWith(type)).ToList();
+            if (string.IsNullOrEmpty(type)) {
+                filteredList = logList; //All entries
+                return;
+            }
+            filteredList = logList.Where(entry => entry.status.Contains(type)).ToList();
             logListMutex.ReleaseMutex();
         }
     }
