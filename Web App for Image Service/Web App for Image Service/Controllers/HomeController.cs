@@ -92,6 +92,10 @@ namespace Web_App_for_Image_Service.Controllers
         public IActionResult RemoveHandler(string handlerPath)
         {
             if(!string.IsNullOrEmpty(handlerPath)) configModel.RemoveHandler(handlerPath);
+            while(!configModel.enabled)
+            {
+                Thread.Sleep(1000);
+            }
             return View("Config", configModel);
         }
     }

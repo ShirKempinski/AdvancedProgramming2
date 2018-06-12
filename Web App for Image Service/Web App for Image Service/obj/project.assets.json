@@ -13123,27 +13123,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Shir\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackagesFallback\\": {},
+    "C:\\Users\\mijael\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Shir\\source\\repos\\Web App for Image Service\\Web App for Image Service\\Web App for Image Service.csproj",
+      "projectUniqueName": "C:\\Users\\mijael\\source\\repos\\AdvancedProgramming2-master\\Web App for Image Service\\Web App for Image Service\\Web App for Image Service.csproj",
       "projectName": "Web App for Image Service",
-      "projectPath": "C:\\Users\\Shir\\source\\repos\\Web App for Image Service\\Web App for Image Service\\Web App for Image Service.csproj",
-      "packagesPath": "C:\\Users\\Shir\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Shir\\source\\repos\\Web App for Image Service\\Web App for Image Service\\obj\\",
+      "projectPath": "C:\\Users\\mijael\\source\\repos\\AdvancedProgramming2-master\\Web App for Image Service\\Web App for Image Service\\Web App for Image Service.csproj",
+      "packagesPath": "C:\\Users\\mijael\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\mijael\\source\\repos\\AdvancedProgramming2-master\\Web App for Image Service\\Web App for Image Service\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackagesFallback\\",
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\Shir\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.Fallback.config"
+        "C:\\Users\\mijael\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp2.0"

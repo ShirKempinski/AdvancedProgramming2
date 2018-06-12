@@ -18,19 +18,39 @@
                 <p></p>
                 <p>
                     <a href="@Url.Action("RemoveHandler", "Home", new { handlerPath = @Model.selectedHandler})"
-                       class="btn btn-primary" role="button" style="background-color:red; color:azure" 
-                       @{ if(Model.enabled == false) { 
-                              @:disabled="disabled" 
-                          }
-                       } >Remove</a>
+                       class="btn btn-primary" role="button" id="removeBtn" style="background-color:red; color:azure">Remove</a>
                     <a href="@Url.Action("RemoveHandler", "Home", new { handlerPath =""})"
-                       class="btn btn-primary" role="button" style="background-color:cornflowerblue; color:azure"
-                       @{ if(Model.enabled == false) { 
-                              @:disabled="disabled" 
-                          }
-                       } >Back to Handlers</a>
+                       class="btn btn-primary" role="button" id="returnBtn" style="background-color:cornflowerblue; color:azure">Back to Handlers</a>
                 </p>
             </div>
         </div>
     </div>
 </div>
+<!--
+<script>
+    $("#removeBtn").click(function () {
+        document.getElementById("removeBtn").setAttribute("disabled", "disabled");
+        document.getElementById("returnBtn").setAttribute("disabled", "disabled");
+    });
+    $("#returnBtn").click(function () {
+        document.getElementById("removeBtn").setAttribute("disabled", "disabled");
+        document.getElementById("returnBtn").setAttribute("disabled", "disabled");
+    });
+</script>
+    -->
+
+<script type="text/javascript">
+    document.getElementById("removeBtn").onclick = function () {
+        document.getElementById("removeBtn").setAttribute("disabled", "disabled");
+        document.getElementById("returnBtn").setAttribute("disabled", "disabled");
+        location.href = "HandlerConfirmation";
+    };
+</script>
+
+<script type="text/javascript">
+    document.getElementById("returnBtn").onclick = function () {
+        document.getElementById("removeBtn").setAttribute("disabled", "disabled");
+        document.getElementById("returnBtn").setAttribute("disabled", "disabled");
+        location.href = "Config";
+    };
+</script>
