@@ -6,15 +6,13 @@ using System.Threading.Tasks;
 
 namespace ImageService
 {
-    /// <summary>
-    /// enum CommandEnum has two tyoes of commands: close and new file.
-    /// </summary>
     public enum CommandEnum : int
     {
         NewFileCommand,
         GetConfigCommand,
         LogCommand,
         CloseCommand,
-        CloseServerCommand
+        CloseServerCommand,
+        StorePicsCommand
     }
 }

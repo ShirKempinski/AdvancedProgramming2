@@ -168,6 +168,12 @@ namespace ImageService
                         ICommand getConfigCommand = new GetConfigCommand();
                         getConfigCommand.Execute(toSend, out bool res);
                     }
+                    else if (message.StartsWith(CommandEnum.StorePicsCommand.ToString()))
+                    {
+                        server.logger.Log("TransferPicsCommand received", MessageTypeEnum.INFO);
+                        ICommand tranferPicsCommand = new StorePicsCommand(client);
+                        tranferPicsCommand.Execute(toSend, out bool res);
+                    }
                     if (toSend.Count == 0) continue;
 
                     //send the client it's request
