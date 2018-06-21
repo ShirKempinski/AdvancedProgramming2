@@ -18,33 +18,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-        /**
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });*/
-
         Button startButton = findViewById(R.id.startService);
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Service Started", Snackbar.LENGTH_SHORT).show();
-                startService();
-            }
+            public void onClick(View view) { startService(); }
         });
 
         Button stopButton = findViewById(R.id.stopService);
-        startButton.setOnClickListener(new View.OnClickListener() {
+        stopButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Service Stopped", Snackbar.LENGTH_SHORT).show();
-                stopService();
-            }
+            public void onClick(View view) { stopService();  }
         });
 
     }
