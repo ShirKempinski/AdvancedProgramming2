@@ -4,6 +4,8 @@ using System.Configuration;
 using System.Drawing;
 using System.IO;
 using System.Net.Sockets;
+using System.Text;
+using System.Threading;
 
 namespace ImageService
 {
@@ -11,11 +13,13 @@ namespace ImageService
     {
         private TcpClient client;
         private Dictionary<string, Image> pictures;
+        private static Mutex mutex;
 
         public StorePicsCommand(TcpClient client)
         {
             this.client = client;
             pictures = new Dictionary<string, Image>();
+            if (mutex == null) mutex = new Mutex();
         }
 
         public string Execute(List<string> args, out bool result)
@@ -40,18 +44,19 @@ namespace ImageService
         private void ReadImages()
         {
             NetworkStream stream = new NetworkStream(client.Client);
-            StreamReader reader = new StreamReader(stream);
-
-            int numOfPics = int.Parse(reader.ReadLine());
+            BinaryReader reader = new BinaryReader(stream);
+            mutex.WaitOne();
+            int numOfPics = reader.ReadInt32();
             for (int i = 0; i < numOfPics; i++)
             {
-                string name = reader.ReadLine();
-                int numOfBytes = int.Parse(reader.ReadLine());
-                byte[] bytes = new byte[numOfBytes];
-                stream.Read(bytes, 0, numOfBytes);
+                int nameSize = reader.ReadInt32();
+                string name = Encoding.UTF8.GetString(reader.ReadBytes(nameSize));
+                int numOfBytes = reader.ReadInt32();
+                byte[] bytes = reader.ReadBytes(numOfBytes);
                 Image picture = byteArrayToImage(bytes);
                 pictures.Add(name, picture);
             }
+            mutex.ReleaseMutex();
         }
 
         private Image byteArrayToImage(byte[] byteArrayIn)

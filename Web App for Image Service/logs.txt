@@ -1,0 +1,148 @@
+Commits on Jun 12, 2018
+Buttons disable on click fixed
+
+@dbitzhak
+dbitzhak committed 3 hours ago
+ 
+Commits on Jun 11, 2018
+cosmetic changes
+
+ShirKempinski
+ShirKempinski committed a day ago
+ 
+Configuration Page and Model added
+
+@dbitzhak
+dbitzhak committed a day ago
+ 
+Logs fixed - Server integration working
+
+@dbitzhak
+dbitzhak committed 2 days ago
+ 
+Commits on Jun 10, 2018
+debugging LogModel
+
+ShirKempinski
+ShirKempinski committed 2 days ago
+ 
+Merge branch 'master' of https://github.com/ShirKempinski/AdvancedPro…  …
+
+ShirKempinski
+ShirKempinski committed 2 days ago
+ 
+start with configModel
+
+ShirKempinski
+ShirKempinski committed 2 days ago
+ 
+Logs reduced to a single class, update problem fixed
+
+@dbitzhak
+dbitzhak committed 2 days ago
+ 
+Merge branch 'master' of https://github.com/ShirKempinski/AdvancedPro…  …
+
+@dbitzhak
+dbitzhak committed 2 days ago
+ 
+update TODO
+
+ShirKempinski
+ShirKempinski committed 2 days ago
+ 
+Photos and Logs included
+
+@dbitzhak
+dbitzhak committed 2 days ago
+ 
+Commits on Jun 7, 2018
+adding photos
+
+ShirKempinski
+ShirKempinski committed 6 days ago
+ 
+Commits on Jun 6, 2018
+Adding new Solution - Web App for Image Service
+
+ShirKempinski
+ShirKempinski committed 7 days ago
+ 
+Commits on May 27, 2018
+adding comments
+
+ShirKempinski
+ShirKempinski committed 16 days ago
+ 
+using microsoft's Prism.Commands and cleaning the views from redunden…  …
+
+ShirKempinski
+ShirKempinski committed 16 days ago
+ 
+inform all clients when server closes
+
+ShirKempinski
+ShirKempinski committed 16 days ago
+ 
+Commits on May 25, 2018
+update TODO list
+
+ShirKempinski
+ShirKempinski committed 19 days ago
+ 
+fixing log entries bugs
+
+ShirKempinski
+ShirKempinski committed 19 days ago
+ 
+improving graphics
+
+ShirKempinski
+ShirKempinski committed 19 days ago
+ 
+Commits on May 24, 2018
+fix communication problems
+
+ShirKempinski
+ShirKempinski committed 20 days ago
+ 
+Commits on May 21, 2018
+adding settingsView and such
+
+ShirKempinski
+ShirKempinski committed 22 days ago
+ 
+Commits on May 17, 2018
+Update ClientTCP
+
+ShirKempinski
+ShirKempinski committed 27 days ago
+ 
+Commits on May 16, 2018
+adding LogEntry and StatusToColorConverter
+
+ShirKempinski
+ShirKempinski committed 27 days ago
+ 
+Commits on May 9, 2018
+adding Client Side of Image Service
+
+ShirKempinski
+ShirKempinski committed on May 9
+ 
+Commits on May 3, 2018
+updating server to support new commands
+
+ShirKempinski
+ShirKempinski committed on May 3
+ 
+Commits on Apr 30, 2018
+ex1
+
+ShirKempinski
+ShirKempinski committed on Apr 30
+ 
+Initial commit
+
+ShirKempinski
+ShirKempinski committed on Apr 30

@@ -8,3 +8,13 @@ C:\Users\Shir\source\repos\MyNewService\MyNewService\obj\Debug\ImageService.cspr
 C:\Users\Shir\source\repos\MyNewService\MyNewService\obj\Debug\ImageService.exe
 C:\Users\Shir\source\repos\MyNewService\MyNewService\obj\Debug\ImageService.pdb
 C:\Users\Shir\source\repos\MyNewService\MyNewService\obj\Debug\ImageService.csprojResolveAssemblyReference.cache
+C:\Users\mijael\source\repos\AdvancedProgramming2-master\Image Service\MyNewService\bin\Debug\ImageService.exe.config
+C:\Users\mijael\source\repos\AdvancedProgramming2-master\Image Service\MyNewService\bin\Debug\ImageService.exe
+C:\Users\mijael\source\repos\AdvancedProgramming2-master\Image Service\MyNewService\bin\Debug\ImageService.pdb
+C:\Users\mijael\source\repos\AdvancedProgramming2-master\Image Service\MyNewService\obj\Debug\ImageService.csprojAssemblyReference.cache
+C:\Users\mijael\source\repos\AdvancedProgramming2-master\Image Service\MyNewService\obj\Debug\ImageService.ImageService.resources
+C:\Users\mijael\source\repos\AdvancedProgramming2-master\Image Service\MyNewService\obj\Debug\ImageService.ProjectInstaller.resources
+C:\Users\mijael\source\repos\AdvancedProgramming2-master\Image Service\MyNewService\obj\Debug\ImageService.csproj.GenerateResource.cache
+C:\Users\mijael\source\repos\AdvancedProgramming2-master\Image Service\MyNewService\obj\Debug\ImageService.csproj.CoreCompileInputs.cache
+C:\Users\mijael\source\repos\AdvancedProgramming2-master\Image Service\MyNewService\obj\Debug\ImageService.exe
+C:\Users\mijael\source\repos\AdvancedProgramming2-master\Image Service\MyNewService\obj\Debug\ImageService.pdb

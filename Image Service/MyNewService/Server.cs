@@ -22,8 +22,10 @@ namespace ImageService
         public ILogging logger { get; }
         public IController controller { get; }
         public List<TcpClient> connectedClients { get; private set; }
-        public TcpListener listener { get; set; }
-        public Thread listeningThread { get; set; }
+        public TcpListener listenerString { get; set; }
+        public TcpListener listenerBytes { get; set; }
+        public Thread listeningStringThread { get; set; }
+        public Thread listeningBytesThread { get; set; }
         private Mutex clientsMutex { get; set; }
         public bool shouldStop { get; set; }
 
@@ -168,12 +170,6 @@ namespace ImageService
                         ICommand getConfigCommand = new GetConfigCommand();
                         getConfigCommand.Execute(toSend, out bool res);
                     }
-                    else if (message.StartsWith(CommandEnum.StorePicsCommand.ToString()))
-                    {
-                        server.logger.Log("TransferPicsCommand received", MessageTypeEnum.INFO);
-                        ICommand tranferPicsCommand = new StorePicsCommand(client);
-                        tranferPicsCommand.Execute(toSend, out bool res);
-                    }
                     if (toSend.Count == 0) continue;
 
                     //send the client it's request
@@ -231,20 +227,22 @@ namespace ImageService
             try
             {
                 // Bind the socket to the local endpoint and listen for incoming connections.  
-                server.listener = new TcpListener(IPAddress.Parse(ConfigurationManager.AppSettings["IP"]),
-                int.Parse(ConfigurationManager.AppSettings["Port"]));
+                server.listenerString = new TcpListener(IPAddress.Parse(ConfigurationManager.AppSettings["IP"]),
+                        int.Parse(ConfigurationManager.AppSettings["PortString"]));
+                server.listenerBytes = new TcpListener(IPAddress.Parse(ConfigurationManager.AppSettings["IP"]),
+                        int.Parse(ConfigurationManager.AppSettings["PortBytes"]));
                 // Start listening for connections.
-                server.listeningThread = new Thread(() =>
+                server.listeningStringThread = new Thread(() =>
                 {
-                    server.logger.Log("Start listening", MessageTypeEnum.INFO);
-                    server.listener.Start();
+                    server.logger.Log("Start listening to Strings", MessageTypeEnum.INFO);
+                    server.listenerString.Start();
                     while (!server.shouldStop)
                     {
                         // Program is suspended while waiting for an incoming connection.
-                        if (server.listener.Pending())
+                        if (server.listenerString.Pending())
                         {
                             server.logger.Log("Client connected", MessageTypeEnum.INFO);
-                            TcpClient client = server.listener.AcceptTcpClient();
+                            TcpClient client = server.listenerString.AcceptTcpClient();
                             server.clientsMutex.WaitOne();
                             server.connectedClients.Add(client);
                             server.clientsMutex.ReleaseMutex();
@@ -252,9 +250,32 @@ namespace ImageService
                             clientThread.Start();
                         }
                     }
-                    server.logger.Log("Stopped listening", MessageTypeEnum.INFO);
+                    server.logger.Log("Stopped listening to Strings", MessageTypeEnum.INFO);
                 });
-                server.listeningThread.Start();
+                server.listeningStringThread.Start();
+
+                server.listeningBytesThread = new Thread(() =>
+                {
+                    server.logger.Log("Start listening to Bytes", MessageTypeEnum.INFO);
+                    server.listenerBytes.Start();
+                    while (!server.shouldStop)
+                    {
+                        // Program is suspended while waiting for an incoming connection.
+                        if (server.listenerBytes.Pending())
+                        {
+                            server.logger.Log("Client connected", MessageTypeEnum.INFO);
+                            TcpClient client = server.listenerBytes.AcceptTcpClient();
+                            server.clientsMutex.WaitOne();
+                            server.connectedClients.Add(client);
+                            server.clientsMutex.ReleaseMutex();
+                            StorePicsCommand storePics = new StorePicsCommand(client);
+                            Thread clientThread = new Thread(() => storePics.Execute(new List<String>(), out bool result));
+                            clientThread.Start();
+                        }
+                    }
+                    server.logger.Log("Stopped listening to Bytes", MessageTypeEnum.INFO);
+                });
+                server.listeningBytesThread.Start();
             }
             catch (Exception e)
             {
