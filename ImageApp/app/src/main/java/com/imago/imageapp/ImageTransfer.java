@@ -1,19 +1,23 @@
 package com.imago.imageapp;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Environment;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.widget.Toast;
+
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -23,16 +27,19 @@ import java.util.Map;
 
 import javax.xml.transform.Result;
 
+
+
 public class ImageTransfer {
-    private NotificationManagerCompat notificationManager;
-    private NotificationCompat.Builder builder;
     private Context context;
+
 
     ImageTransfer(Context context) {
         this.context = context;
     }
 
-    void transferFiles() {
+    void transferFiles(NotificationManager nm, NotificationCompat.Builder bldr) {
+        final NotificationCompat.Builder builder  = bldr;
+        final NotificationManager notificationManager = nm;
         try {
             Thread thread = new Thread(new Runnable() {
                 Socket socket;
@@ -46,7 +53,6 @@ public class ImageTransfer {
                         OutputStream output = socket.getOutputStream();
                         Map<String, byte[]> convertedPictures = getPictures();
                         if (convertedPictures.isEmpty()) return;
-                        OnPreExecute();
                         float inc = 100 / convertedPictures.size();
                         int i = 0;
                         DataOutputStream stream = new DataOutputStream(output);
@@ -73,6 +79,9 @@ public class ImageTransfer {
                     } finally {
                         try {
                             socket.close();
+                            builder.setProgress(0, 0, false);
+                            builder.setContentText("Download complete");
+                            notificationManager.notify(1, builder.build());
                         } catch (Exception e) {
                             Log.e("TCP", "ConnectToServer thread: Error", e);
                             System.out.println(e.getMessage());
@@ -90,13 +99,13 @@ public class ImageTransfer {
 
 
     private Map<String, byte[]> getPictures() {
+        Map<String, byte[]> convertedPictures = new HashMap<String, byte[]>();
         // Getting the Camera Folder
         File dcim = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
-        if (dcim == null) return null;
+        if (dcim == null) return convertedPictures;
 
         List<File> pics = searchPictures(dcim.getAbsolutePath());
-        if (pics.isEmpty()) return null;
-        Map<String, byte[]> convertedPictures = new HashMap<String, byte[]>();
+        if (pics.isEmpty()) return convertedPictures;
         String fileName;
         for (File pic : pics) {
                 fileName = pic.getName();
@@ -167,18 +176,6 @@ public class ImageTransfer {
             return stream.toByteArray();
     }
 
-    protected void OnPreExecute() {
-        notificationManager = NotificationManagerCompat.from(this.context);
-        builder = new NotificationCompat.Builder(this.context, "default");
-        builder.setContentTitle("Picture Transfer").setContentText("Transfer in progress")
-                .setProgress(100,0,false).setPriority(NotificationCompat.PRIORITY_LOW);
-        builder.setSmallIcon(R.drawable.ic_launcher_background);
-    }
 
-    protected void onPostExecute (Result result) {
-        // At the End
-        builder.setContentText("Download complete").setProgress(0, 0, false);
-        notificationManager.notify(1, builder.build());
-    }
 
 }

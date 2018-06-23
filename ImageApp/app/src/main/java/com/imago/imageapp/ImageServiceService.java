@@ -1,5 +1,7 @@
 package com.imago.imageapp;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -24,6 +26,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -31,6 +34,7 @@ import android.os.Looper;
 import android.os.UserHandle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NotificationCompat;
 import android.view.Display;
 import android.widget.Toast;
 
@@ -44,6 +48,9 @@ import java.io.InputStream;
 public class ImageServiceService extends Service {
 
     private BroadcastReceiver receiver;
+    private static final String channel = "ourChannel";
+    private static final String userChannelName = "Image Transfer Progress";
+
 
     @Nullable
     @Override
@@ -83,7 +90,7 @@ public class ImageServiceService extends Service {
                 NetworkInfo networkInfo = intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
                 if (networkInfo != null) {
                     if (networkInfo.getType() == ConnectivityManager.TYPE_WIFI) {
-                        if (networkInfo.getState() == NetworkInfo.State.CONNECTED) startTransfer();
+                        if (networkInfo.getState() == NetworkInfo.State.CONNECTED) notifyAndStartTransfer();
                     }
                 }
             }
@@ -91,8 +98,23 @@ public class ImageServiceService extends Service {
         this.registerReceiver(this.receiver, theFilter);
     }
 
-    private void startTransfer() {
+    private void startTransfer(NotificationManager nm, NotificationCompat.Builder b) {
         ImageTransfer transfer = new ImageTransfer(this);
-        transfer.transferFiles();
+        transfer.transferFiles(nm,b);
+    }
+
+    private void notifyAndStartTransfer() {
+        final NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channel);
+        final NotificationManager notificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) { //Createa channel for higher imorts
+            /* Create or update. */
+            NotificationChannel mChannel = new NotificationChannel(channel,
+                    userChannelName, NotificationManager.IMPORTANCE_DEFAULT);
+            notificationManager.createNotificationChannel(mChannel);
+        }
+        builder.setContentTitle("Picture Transfer").setContentText("Transfer in progress").setPriority(NotificationCompat.PRIORITY_LOW);
+        builder.setSmallIcon(R.drawable.ic_launcher_background);
+        startTransfer(notificationManager, builder);
     }
 }
