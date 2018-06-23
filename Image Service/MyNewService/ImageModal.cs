@@ -60,7 +60,8 @@ namespace ImageService
                     Thread.Sleep(100);
                 }
                 string targetPath = outputDir + pathFromDate(sourceFile);
-                string destFile = GenerateDestName(fileName, targetPath);
+                string destFile = Path.Combine(targetPath, fileName);
+                if (File.Exists(destFile)) File.Delete(destFile);
                 CreateHiddenDirectory(targetPath);
                 AddThumbnail(path);
                 MoveFile(sourceFile, destFile);
@@ -75,33 +76,6 @@ namespace ImageService
             }
         }
 
-        /// <summary>
-        /// Creates a destination path composed of the fileName and targetPath.
-        /// </summary>
-        /// <param name="fileName"></param>
-        /// <param name="targetPath"> Destination directory.</param>
-        /// <returns>
-        /// The generated destination path string.
-        /// </returns>
-        /// <remarks> A number is appended if a file of the same name already exists.</remarks>
-        private string GenerateDestName(string fileName, string targetPath)
-        {
-            string destFile = Path.Combine(targetPath, fileName);
-            while (File.Exists(destFile))
-            {
-                int i = 1;
-                string extension = Path.GetExtension(fileName);
-                fileName = fileName.TrimEnd(extension.ToCharArray());
-                if (fileName.EndsWith("(" + i + ")"))
-                {
-                    fileName = fileName.TrimEnd(("(" + i + ")").ToCharArray());
-                    i++;
-                }
-                fileName = fileName + "(" + i + ")" + extension;
-                destFile = Path.Combine(targetPath, fileName);
-            }
-            return destFile;
-        }
 
         /// <summary>
         /// Creates a directory with the Hidden FileAttribute.
@@ -184,7 +158,8 @@ namespace ImageService
                 String fileName = path[1];
                 string sourceFile = Path.Combine(sourcePath, fileName);
                 string targetPath = thumbnailsDir + pathFromDate(sourceFile);
-                string destFile = GenerateDestName(fileName, targetPath);
+                string destFile = Path.Combine(fileName, targetPath);
+                if (File.Exists(destFile)) File.Delete(destFile);
                 CreateHiddenDirectory(targetPath);
                 Image thumbnail = CreateThumbnail(sourceFile);
                 thumbnail.Save(destFile);
